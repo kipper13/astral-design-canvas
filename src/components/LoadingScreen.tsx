@@ -89,7 +89,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       className="fixed inset-0 z-50 flex items-center justify-center"
       style={{
         background: theme === 'dark' 
-          ? "linear-gradient(135deg, hsl(229 41% 14%), hsl(229 45% 17%))" 
+          ? "linear-gradient(135deg, hsl(222 84% 5%), hsl(229 41% 8%))" 
           : "linear-gradient(135deg, hsl(240 6% 94%), hsl(0 0% 100%))"
       }}
     >
