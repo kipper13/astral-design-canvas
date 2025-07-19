@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useTheme } from "next-themes";
 
 interface LoadingScreenProps {
   onComplete: () => void;
 }
 
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
+  const { theme } = useTheme();
   const loaderRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -84,24 +86,33 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-background"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       style={{
-        background: "linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)))"
+        background: theme === 'dark' 
+          ? "linear-gradient(135deg, hsl(229 41% 14%), hsl(229 45% 17%))" 
+          : "linear-gradient(135deg, hsl(240 6% 94%), hsl(0 0% 100%))"
       }}
     >
       {/* Animated particles background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="particles">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <div
               key={i}
-              className="particle"
+              className="absolute rounded-full opacity-60"
               style={{
                 left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
-                animationDelay: `${Math.random() * 15}s`,
-                animationDuration: `${Math.random() * 10 + 10}s`
+                top: `${Math.random() * 100}%`,
+                width: `${Math.random() * 6 + 2}px`,
+                height: `${Math.random() * 6 + 2}px`,
+                background: theme === 'dark' 
+                  ? "hsl(11 100% 69%)" 
+                  : "hsl(229 62% 62%)",
+                boxShadow: theme === 'dark'
+                  ? "0 0 20px hsl(11 100% 69% / 0.4)"
+                  : "0 0 20px hsl(229 62% 62% / 0.4)",
+                animation: `particleFloat ${Math.random() * 10 + 10}s infinite linear`,
+                animationDelay: `${Math.random() * 15}s`
               }}
             />
           ))}
@@ -111,10 +122,26 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       <div className="relative z-10 text-center">
         {/* Logo/Brand */}
         <div ref={logoRef} className="mb-8">
-          <h1 className="text-6xl md:text-8xl font-bold font-poppins gradient-text mb-4">
+          <h1 
+            className="text-6xl md:text-8xl font-bold font-poppins mb-4"
+            style={{
+              background: theme === 'dark'
+                ? "linear-gradient(135deg, hsl(11 100% 69%), hsl(280 100% 60%))"
+                : "linear-gradient(135deg, hsl(229 62% 62%), hsl(280 100% 70%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.3))"
+            }}
+          >
             Kev'n
           </h1>
-          <h2 className="text-xl md:text-2xl font-montserrat text-muted-foreground tracking-[0.2em]">
+          <h2 
+            className="text-xl md:text-2xl font-montserrat tracking-[0.2em]"
+            style={{
+              color: theme === 'dark' ? "hsl(0 0% 65%)" : "hsl(215 16% 47%)"
+            }}
+          >
             CREATES
           </h2>
         </div>
@@ -123,16 +150,36 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <div ref={progressBarRef} className="w-80 mx-auto">
           <div className="relative">
             {/* Progress Bar Background */}
-            <div className="h-1 bg-border rounded-full overflow-hidden">
+            <div 
+              className="h-1 rounded-full overflow-hidden"
+              style={{
+                backgroundColor: theme === 'dark' 
+                  ? "hsl(229 35% 20%)" 
+                  : "hsl(240 6% 88%)"
+              }}
+            >
               {/* Progress Bar Fill */}
               <div
-                className="h-full bg-gradient-to-r from-primary to-accent rounded-full w-0 relative"
+                className="h-full rounded-full w-0 relative"
                 style={{
-                  boxShadow: "0 0 20px hsl(var(--primary) / 0.5)"
+                  background: theme === 'dark'
+                    ? "linear-gradient(to right, hsl(11 100% 69%), hsl(280 100% 60%))"
+                    : "linear-gradient(to right, hsl(229 62% 62%), hsl(280 100% 70%))",
+                  boxShadow: theme === 'dark'
+                    ? "0 0 20px hsl(11 100% 69% / 0.5), 0 0 40px hsl(11 100% 69% / 0.3)"
+                    : "0 0 20px hsl(229 62% 62% / 0.5), 0 0 40px hsl(229 62% 62% / 0.3)"
                 }}
               >
                 {/* Glowing dot at the end */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full animate-pulse" />
+                <div 
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full animate-pulse"
+                  style={{
+                    backgroundColor: theme === 'dark' ? "hsl(11 100% 69%)" : "hsl(229 62% 62%)",
+                    boxShadow: theme === 'dark'
+                      ? "0 0 15px hsl(11 100% 69% / 0.8)"
+                      : "0 0 15px hsl(229 62% 62% / 0.8)"
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -140,17 +187,37 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           {/* Percentage */}
           <div
             ref={percentageRef}
-            className="mt-4 text-sm font-montserrat text-muted-foreground tracking-wider"
+            className="mt-4 text-sm font-montserrat tracking-wider"
+            style={{
+              color: theme === 'dark' ? "hsl(0 0% 65%)" : "hsl(215 16% 47%)"
+            }}
           >
             0%
           </div>
         </div>
 
-        {/* Tech dots decoration */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 opacity-10">
-          <div className="w-full h-full border border-primary/20 rounded-full animate-pulse" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-primary/30 rounded-full animate-pulse" style={{ animationDelay: "0.5s" }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-primary/40 rounded-full animate-pulse" style={{ animationDelay: "1s" }} />
+        {/* Tech circles decoration */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 opacity-20">
+          <div 
+            className="w-full h-full rounded-full animate-pulse border"
+            style={{
+              borderColor: theme === 'dark' ? "hsl(11 100% 69% / 0.2)" : "hsl(229 62% 62% / 0.2)"
+            }}
+          />
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full animate-pulse border" 
+            style={{ 
+              animationDelay: "0.5s",
+              borderColor: theme === 'dark' ? "hsl(11 100% 69% / 0.3)" : "hsl(229 62% 62% / 0.3)"
+            }} 
+          />
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full animate-pulse border" 
+            style={{ 
+              animationDelay: "1s",
+              borderColor: theme === 'dark' ? "hsl(11 100% 69% / 0.4)" : "hsl(229 62% 62% / 0.4)"
+            }} 
+          />
         </div>
       </div>
     </div>
