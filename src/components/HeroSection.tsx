@@ -92,7 +92,7 @@ export const HeroSection = () => {
               <div className="profile-card w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_25px_50px_-12px_hsl(var(--primary)/0.5)] group-hover:border-primary/50 group-hover:-translate-y-2">
                 <div className="relative w-full h-full">
                   <img 
-                    src="/lovable-uploads/4b669d55-1c78-4a05-838c-a1b9a5810a78.png" 
+                    src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png" 
                     alt="Christian Kevin Flores - Professional Designer" 
                     className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                     onError={(e) => {
