@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import profilePhoto from "@/assets/christian-kevin-flores.jpg";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 export const HeroSection = () => {
   const [typingText, setTypingText] = useState("");
@@ -84,7 +84,7 @@ export const HeroSection = () => {
       <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-primary/30 rounded-full animate-float blur-xl" style={{ animationDelay: "4s" }}></div>
 
       <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 items-center">
           {/* Text Content */}
           <div className="text-center lg:text-left space-y-8">
             <div className="space-y-4">
@@ -143,14 +143,18 @@ export const HeroSection = () => {
           {/* 3D Device Showcase */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Profile Photo with Premium Hover Effect */}
-              <div className="profile-container w-64 h-64 relative mx-auto group cursor-pointer profile-premium-hover">
+              {/* Profile Photo with Premium Hover Effect and Float Animation */}
+              <div className="profile-container w-64 h-64 relative mx-auto lg:mx-0 group cursor-pointer profile-premium-hover animate-float">
                 <div className="profile-card absolute w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] group-hover:border-primary/50">
                   <div className="relative w-full h-full">
                     <img 
                       src={profilePhoto} 
                       alt="Christian Kevin Flores - Professional Designer" 
                       className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        console.log('Image failed to load:', profilePhoto);
+                        e.currentTarget.src = '/placeholder.svg';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-all duration-500 group-hover:from-primary/40 group-hover:to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform transition-all duration-500 group-hover:translate-y-2">
