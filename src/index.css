@@ -261,6 +261,29 @@
   50% { background-position: 100% 50%; }
 }
 
+/* Premium Profile Hover Effect */
+.profile-container {
+  transition: var(--transition-smooth);
+}
+
+.profile-container:hover {
+  transform: translateY(-20px) scale(1.05);
+  filter: drop-shadow(0 25px 50px hsl(var(--primary) / 0.4));
+}
+
+.profile-container:hover .profile-card {
+  transform: rotateY(5deg) rotateX(5deg);
+  box-shadow: 
+    0 25px 50px -10px hsl(var(--primary) / 0.3),
+    0 0 0 1px hsl(var(--primary) / 0.2),
+    inset 0 1px 0 hsl(var(--primary) / 0.1);
+}
+
+.profile-card {
+  transition: var(--transition-smooth);
+  transform-style: preserve-3d;
+}
+
 @keyframes particleFloat {
   0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
   10% { opacity: 1; }

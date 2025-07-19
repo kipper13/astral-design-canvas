@@ -144,8 +144,8 @@ export const HeroSection = () => {
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
               {/* Profile Photo with 3D Effect */}
-              <div className="animate-cube w-64 h-64 relative mx-auto">
-                <div className="absolute w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="profile-container w-64 h-64 relative mx-auto group cursor-pointer">
+                <div className="profile-card absolute w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
                   <div className="relative w-full h-full">
                     <img 
                       src={profilePhoto} 
