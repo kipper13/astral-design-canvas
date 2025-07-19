@@ -84,9 +84,48 @@ export const HeroSection = () => {
       <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-primary/30 rounded-full animate-float blur-xl" style={{ animationDelay: "4s" }}></div>
 
       <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-4 items-center">
-          {/* Text Content */}
-          <div className="text-center lg:text-left space-y-8">
+        <div className="flex flex-col items-center text-center space-y-8 max-w-4xl mx-auto">
+          {/* Profile Photo Section - Positioned at the top */}
+          <div className="relative mb-4">
+            {/* Profile Photo with Premium Hover Effect and Float Animation */}
+            <div className="profile-container w-64 h-64 md:w-72 md:h-72 relative group cursor-pointer animate-float">
+              <div className="profile-card w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_25px_50px_-12px_hsl(var(--primary)/0.5)] group-hover:border-primary/50 group-hover:-translate-y-2">
+                <div className="relative w-full h-full">
+                  <img 
+                    src="/lovable-uploads/0ea45bbb-7ced-4a33-b999-f8ad3383d123.png" 
+                    alt="Christian Kevin Flores - Professional Designer" 
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      console.log('Image failed to load');
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-all duration-500 group-hover:from-primary/40 group-hover:to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform transition-all duration-500 group-hover:translate-y-1">
+                    <h3 className="text-lg font-poppins font-semibold text-white transition-all duration-500 group-hover:text-primary-foreground group-hover:drop-shadow-lg">Christian Kevin Flores</h3>
+                    <p className="text-sm text-white/80 transition-all duration-500 group-hover:text-primary-foreground/90">Creative Designer</p>
+                  </div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-primary/30 via-transparent to-accent/30"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Elements around the photo */}
+            <div className="absolute -top-8 -right-8 w-20 h-20 bg-card border border-border rounded-xl shadow-lg animate-float hover-glow">
+              <div className="h-full flex items-center justify-center">
+                <i className="fas fa-tablet-alt text-xl text-primary"></i>
+              </div>
+            </div>
+            
+            <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-card border border-border rounded-xl shadow-lg animate-float hover-glow" style={{ animationDelay: "1s" }}>
+              <div className="h-full flex items-center justify-center">
+                <i className="fas fa-mobile-alt text-lg text-primary"></i>
+              </div>
+            </div>
+          </div>
+
+          {/* Text Content - Positioned below the photo */}
+          <div className="space-y-6">
             <div className="space-y-4">
               <h1 className="hero-title text-4xl md:text-6xl lg:text-7xl font-poppins font-bold text-foreground">
                 Creative
@@ -101,12 +140,12 @@ export const HeroSection = () => {
               </div>
             </div>
 
-            <p className="hero-subtitle text-lg md:text-xl text-muted-foreground font-montserrat max-w-2xl">
+            <p className="hero-subtitle text-lg md:text-xl text-muted-foreground font-montserrat max-w-2xl mx-auto">
               Crafting beautiful, conversion-focused designs that blend creativity with strategy. 
               Specialized in landing pages, funnels, and user experiences that drive results.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
                 className="hover-lift font-montserrat font-semibold px-8 py-3 text-lg"
@@ -127,7 +166,7 @@ export const HeroSection = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex gap-6 justify-center lg:justify-start pt-4">
+            <div className="flex gap-6 justify-center pt-4">
               {["dribbble", "behance", "instagram", "linkedin"].map((social) => (
                 <a
                   key={social}
@@ -137,47 +176,6 @@ export const HeroSection = () => {
                   <i className={`fab fa-${social} text-xl text-primary`}></i>
                 </a>
               ))}
-            </div>
-          </div>
-
-          {/* Profile Photo Section */}
-          <div className="flex justify-center lg:justify-start lg:ml-8">
-            <div className="relative">
-              {/* Profile Photo with Premium Hover Effect and Float Animation */}
-              <div className="profile-container w-72 h-72 relative mx-auto lg:mx-0 group cursor-pointer animate-float">
-                <div className="profile-card w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_25px_50px_-12px_hsl(var(--primary)/0.5)] group-hover:border-primary/50 group-hover:-translate-y-2">
-                  <div className="relative w-full h-full">
-                    <img 
-                      src="/lovable-uploads/0ea45bbb-7ced-4a33-b999-f8ad3383d123.png" 
-                      alt="Christian Kevin Flores - Professional Designer" 
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                      onError={(e) => {
-                        console.log('Image failed to load');
-                        e.currentTarget.src = '/placeholder.svg';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-all duration-500 group-hover:from-primary/40 group-hover:to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform transition-all duration-500 group-hover:translate-y-1">
-                      <h3 className="text-lg font-poppins font-semibold text-white transition-all duration-500 group-hover:text-primary-foreground group-hover:drop-shadow-lg">Christian Kevin Flores</h3>
-                      <p className="text-sm text-white/80 transition-all duration-500 group-hover:text-primary-foreground/90">Creative Designer</p>
-                    </div>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-primary/30 via-transparent to-accent/30"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Elements */}
-              <div className="absolute -top-8 -right-8 w-24 h-24 bg-card border border-border rounded-xl shadow-lg animate-float hover-glow">
-                <div className="h-full flex items-center justify-center">
-                  <i className="fas fa-tablet-alt text-2xl text-primary"></i>
-                </div>
-              </div>
-              
-              <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-card border border-border rounded-xl shadow-lg animate-float hover-glow" style={{ animationDelay: "1s" }}>
-                <div className="h-full flex items-center justify-center">
-                  <i className="fas fa-mobile-alt text-xl text-primary"></i>
-                </div>
-              </div>
             </div>
           </div>
         </div>
