@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -261,27 +262,24 @@
   50% { background-position: 100% 50%; }
 }
 
-/* Premium Profile Hover Effect */
+/* Enhanced Profile Container Hover Effect */
 .profile-container {
   transition: var(--transition-smooth);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  position: relative;
+  z-index: 10;
 }
 
 .profile-container:hover {
-  transform: translateY(-20px) scale(1.05);
-  filter: drop-shadow(0 25px 50px hsl(var(--primary) / 0.4));
-}
-
-.profile-container:hover .profile-card {
-  transform: rotateY(5deg) rotateX(5deg);
-  box-shadow: 
-    0 25px 50px -10px hsl(var(--primary) / 0.3),
-    0 0 0 1px hsl(var(--primary) / 0.2),
-    inset 0 1px 0 hsl(var(--primary) / 0.1);
+  z-index: 20;
 }
 
 .profile-card {
   transition: var(--transition-smooth);
   transform-style: preserve-3d;
+  backface-visibility: hidden;
+  position: relative;
 }
 
 @keyframes particleFloat {
@@ -289,21 +287,6 @@
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-}
-
-/* Profile hover effect with premium feel */
-.profile-premium-hover {
-  perspective: 1000px;
-}
-
-.profile-premium-hover:hover .profile-card {
-  transform: scale(1.08) translateY(-10px) rotateY(5deg) rotateX(5deg);
-  box-shadow: 
-    0 30px 60px -12px rgba(var(--primary) / 0.5),
-    0 0 0 1px rgba(var(--primary) / 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    0 0 40px rgba(var(--primary) / 0.3);
-  filter: brightness(1.1);
 }
 
 /* Responsive Typography */
