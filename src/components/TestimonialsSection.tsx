@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import sarahJohnson from "@/assets/sarah-johnson.jpg";
+import michaelChen from "@/assets/michael-chen.jpg";
+import emilyRodriguez from "@/assets/emily-rodriguez.jpg";
+import davidThompson from "@/assets/david-thompson.jpg";
+import lisaPark from "@/assets/lisa-park.jpg";
 
 const testimonials = [
   {
@@ -8,7 +13,7 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Marketing Director",
     company: "TechStart Inc.",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612db76?w=100&h=100&fit=crop&crop=face",
+    image: sarahJohnson,
     rating: 5,
     text: "The landing page design exceeded our expectations. Our conversion rate increased by 40% within the first month. The attention to detail and user experience is outstanding.",
     project: "SaaS Landing Page"
@@ -18,7 +23,7 @@ const testimonials = [
     name: "Michael Chen",
     role: "Founder & CEO",
     company: "GrowthLab",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+    image: michaelChen,
     rating: 5,
     text: "Working with this designer was a game-changer for our business. The funnel optimization resulted in 65% more qualified leads and significantly improved our ROI.",
     project: "Lead Generation Funnel"
@@ -28,7 +33,7 @@ const testimonials = [
     name: "Emily Rodriguez",
     role: "Product Manager",
     company: "InnovateCorp",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+    image: emilyRodriguez,
     rating: 5,
     text: "The mobile app interface design was intuitive and beautiful. Our user engagement increased by 55% and app store ratings improved dramatically. Highly recommended!",
     project: "Mobile App UI/UX"
@@ -38,7 +43,7 @@ const testimonials = [
     name: "David Thompson",
     role: "E-commerce Director",
     company: "RetailMax",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+    image: davidThompson,
     rating: 5,
     text: "The e-commerce redesign was phenomenal. Clean, modern design with exceptional user flow. Sales increased by 80% in the first quarter after launch.",
     project: "E-commerce Redesign"
@@ -48,7 +53,7 @@ const testimonials = [
     name: "Lisa Park",
     role: "Marketing Head",
     company: "StartupVenture",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face",
+    image: lisaPark,
     rating: 5,
     text: "Professional, creative, and results-driven. The brand identity and website design perfectly captured our vision and helped us stand out in a competitive market.",
     project: "Brand Identity & Website"
