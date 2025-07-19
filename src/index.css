@@ -291,6 +291,21 @@
   100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
 
+/* Profile hover effect with premium feel */
+.profile-premium-hover {
+  perspective: 1000px;
+}
+
+.profile-premium-hover:hover .profile-card {
+  transform: scale(1.08) translateY(-10px) rotateY(5deg) rotateX(5deg);
+  box-shadow: 
+    0 30px 60px -12px rgba(var(--primary) / 0.5),
+    0 0 0 1px rgba(var(--primary) / 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(var(--primary) / 0.3);
+  filter: brightness(1.1);
+}
+
 /* Responsive Typography */
 @media (max-width: 768px) {
   .hero-title {
