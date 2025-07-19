@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 export const HeroSection = () => {
   const [typingText, setTypingText] = useState("");
@@ -142,15 +143,20 @@ export const HeroSection = () => {
           {/* 3D Device Showcase */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Main 3D Cube */}
+              {/* Profile Photo with 3D Effect */}
               <div className="animate-cube w-64 h-64 relative mx-auto">
-                <div className="absolute w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm">
-                  <div className="p-6 h-full flex flex-col justify-center items-center">
-                    <div className="w-full h-32 bg-primary/20 rounded-lg mb-4 flex items-center justify-center">
-                      <i className="fas fa-laptop text-4xl text-primary"></i>
+                <div className="absolute w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
+                  <div className="relative w-full h-full">
+                    <img 
+                      src={profilePhoto} 
+                      alt="Professional Designer" 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+                      <h3 className="text-lg font-poppins font-semibold text-white">Alex Chen</h3>
+                      <p className="text-sm text-white/80">Creative Designer</p>
                     </div>
-                    <h3 className="text-lg font-poppins font-semibold text-foreground">Desktop</h3>
-                    <p className="text-sm text-muted-foreground text-center">Responsive Design</p>
                   </div>
                 </div>
               </div>

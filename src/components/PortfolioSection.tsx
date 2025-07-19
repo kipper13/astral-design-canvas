@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { ExternalLink, Github, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import portfolio1 from "@/assets/portfolio-1.jpg";
+import portfolio2 from "@/assets/portfolio-2.jpg";
+import portfolio3 from "@/assets/portfolio-3.jpg";
 
 const projects = [
   {
     id: 1,
     title: "E-commerce Landing Page",
     category: "landing",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+    image: portfolio1,
     beforeImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
     description: "Modern e-commerce landing page with 40% conversion rate improvement",
     tech: ["Figma", "Webflow", "Analytics"],
@@ -18,7 +21,7 @@ const projects = [
     id: 2,
     title: "SaaS Product Funnel",
     category: "funnel",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
+    image: portfolio2,
     beforeImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
     description: "Complete sales funnel optimization increasing MRR by 65%",
     tech: ["Sketch", "InVision", "Hotjar"],
@@ -29,7 +32,7 @@ const projects = [
     id: 3,
     title: "Mobile App Interface",
     category: "design",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
+    image: portfolio3,
     beforeImage: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
     description: "Intuitive mobile app design with enhanced user experience",
     tech: ["Figma", "Principle", "Zeplin"],
