@@ -221,6 +221,49 @@
   }
 }
 
+/* Print Styles for Resume */
+@media print {
+  .print\\:hidden {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .bg-gradient-to-r,
+  .bg-gradient-to-br {
+    background: hsl(229 62% 62%) !important;
+    color: white !important;
+  }
+  
+  .shadow-lg,
+  .hover-glow,
+  .hover-lift {
+    box-shadow: none !important;
+  }
+  
+  .border {
+    border-color: #ccc !important;
+  }
+  
+  .rounded-lg,
+  .rounded-xl,
+  .rounded-2xl,
+  .rounded-3xl {
+    border-radius: 8px !important;
+  }
+  
+  section {
+    page-break-inside: avoid;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }

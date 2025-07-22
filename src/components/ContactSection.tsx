@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
+
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -13,15 +15,15 @@ export const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -46,6 +48,7 @@ export const ContactSection = () => {
       setIsSubmitted(false);
     }, 3000);
   };
+
   const socialLinks = [{
     icon: "fab fa-dribbble",
     label: "Dribbble",
@@ -77,7 +80,9 @@ export const ContactSection = () => {
     href: "#",
     color: "hover:text-gray-800"
   }];
-  return <section id="contact" className="py-20 lg:py-32 relative overflow-hidden">
+
+  return (
+    <section id="contact" className="py-20 lg:py-32 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-32 right-10 w-56 h-56 bg-primary/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-32 left-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl"></div>
@@ -97,7 +102,8 @@ export const ContactSection = () => {
           {/* Contact Form */}
           <div className="bg-card border border-border rounded-3xl p-8 hover-lift hover-glow relative overflow-hidden">
             {/* Success Animation Overlay */}
-            {isSubmitted && <div className="absolute inset-0 bg-card flex items-center justify-center z-10 animate-slide-up">
+            {isSubmitted && (
+              <div className="absolute inset-0 bg-card flex items-center justify-center z-10 animate-slide-up">
                 <div className="text-center">
                   <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                     <CheckCircle className="h-10 w-10 text-white" />
@@ -109,7 +115,8 @@ export const ContactSection = () => {
                     Thanks for reaching out. I'll get back to you soon!
                   </p>
                 </div>
-              </div>}
+              </div>
+            )}
 
             <div className="mb-8">
               <h3 className="text-2xl font-poppins font-bold text-foreground mb-2">
@@ -123,29 +130,68 @@ export const ContactSection = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <Input name="name" placeholder="Your Name" value={formData.name} onChange={handleInputChange} required className="h-12 border-2 focus:border-primary transition-colors" />
+                  <Input
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="h-12 border-2 focus:border-primary transition-colors"
+                  />
                 </div>
                 <div>
-                  <Input name="email" type="email" placeholder="Your Email" value={formData.email} onChange={handleInputChange} required className="h-12 border-2 focus:border-primary transition-colors" />
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="h-12 border-2 focus:border-primary transition-colors"
+                  />
                 </div>
               </div>
 
               <div>
-                <Input name="subject" placeholder="Subject" value={formData.subject} onChange={handleInputChange} required className="h-12 border-2 focus:border-primary transition-colors" />
+                <Input
+                  name="subject"
+                  placeholder="Subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  required
+                  className="h-12 border-2 focus:border-primary transition-colors"
+                />
               </div>
 
               <div>
-                <Textarea name="message" placeholder="Tell me about your project..." value={formData.message} onChange={handleInputChange} required rows={6} className="border-2 focus:border-primary transition-colors resize-none" />
+                <Textarea
+                  name="message"
+                  placeholder="Tell me about your project..."
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={6}
+                  className="border-2 focus:border-primary transition-colors resize-none"
+                />
               </div>
 
-              <Button type="submit" size="lg" disabled={isSubmitting} className="w-full hover-lift font-montserrat font-semibold h-12">
-                {isSubmitting ? <>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="w-full hover-lift font-montserrat font-semibold h-12"
+              >
+                {isSubmitting ? (
+                  <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                     Sending...
-                  </> : <>
+                  </>
+                ) : (
+                  <>
                     <Send className="mr-2 h-5 w-5" />
                     Send Message
-                  </>}
+                  </>
+                )}
               </Button>
             </form>
           </div>
@@ -202,10 +248,12 @@ export const ContactSection = () => {
               <p className="text-muted-foreground font-montserrat mb-6">
                 Get a detailed overview of my experience and skills.
               </p>
-              <Button variant="outline" className="hover-lift font-montserrat font-semibold">
-                <Download className="mr-2 h-4 w-4" />
-                Download PDF
-              </Button>
+              <Link to="/resume">
+                <Button variant="outline" className="hover-lift font-montserrat font-semibold">
+                  <Download className="mr-2 h-4 w-4" />
+                  View Resume
+                </Button>
+              </Link>
             </div>
 
             {/* Social Links */}
@@ -214,9 +262,15 @@ export const ContactSection = () => {
                 Follow Me
               </h3>
               <div className="grid grid-cols-3 gap-4">
-                {socialLinks.map(social => <a key={social.label} href={social.href} className={`w-full h-12 bg-muted border border-border rounded-xl flex items-center justify-center hover-lift transition-all group ${social.color}`}>
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    className={`w-full h-12 bg-muted border border-border rounded-xl flex items-center justify-center hover-lift transition-all group ${social.color}`}
+                  >
                     <i className={`${social.icon} text-xl text-muted-foreground group-hover:scale-110 transition-transform`}></i>
-                  </a>)}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -234,5 +288,6 @@ export const ContactSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
