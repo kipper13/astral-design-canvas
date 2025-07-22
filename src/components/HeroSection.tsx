@@ -155,14 +155,16 @@ export const HeroSection = () => {
                 <ArrowDown className="ml-2 h-5 w-5" />
               </Button>
               
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="hover-lift font-montserrat font-semibold px-8 py-3 text-lg border-2 hover:bg-primary hover:text-primary-foreground"
-              >
-                <Download className="mr-2 h-5 w-5" />
-                Download Resume
-              </Button>
+              <a href="/resume">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="hover-lift font-montserrat font-semibold px-8 py-3 text-lg border-2 hover:bg-primary hover:text-primary-foreground"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Resume
+                </Button>
+              </a>
             </div>
 
             {/* Social Links */}
