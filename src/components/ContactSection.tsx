@@ -264,42 +264,6 @@ export const ContactSection = () => {
               </div>
             </div>
 
-            {/* Download Resume */}
-            <div className="bg-card border border-border rounded-3xl p-8 hover-lift hover-glow text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Download className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-poppins font-bold text-foreground mb-2">
-                Download Resume
-              </h3>
-              <p className="text-muted-foreground font-montserrat mb-6">
-                Get a detailed overview of my experience and skills.
-              </p>
-              <Link to="/resume">
-                <Button variant="outline" className="hover-lift font-montserrat font-semibold">
-                  <Download className="mr-2 h-4 w-4" />
-                  View Resume
-                </Button>
-              </Link>
-            </div>
-
-            {/* Social Links */}
-            <div className="bg-card border border-border rounded-3xl p-8 hover-lift hover-glow">
-              <h3 className="text-xl font-poppins font-bold text-foreground mb-6 text-center">
-                Follow Me
-              </h3>
-              <div className="grid grid-cols-3 gap-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    className={`w-full h-12 bg-muted border border-border rounded-xl flex items-center justify-center hover-lift transition-all group ${social.color}`}
-                  >
-                    <i className={`${social.icon} text-xl text-muted-foreground group-hover:scale-110 transition-transform`}></i>
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 
