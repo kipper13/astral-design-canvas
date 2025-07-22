@@ -264,6 +264,21 @@ export const ContactSection = () => {
               </div>
             </div>
 
+            {/* Download Resume Section */}
+            <div className="bg-card border border-border rounded-3xl p-8 hover-lift hover-glow text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Download className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-poppins font-bold text-foreground mb-2">Download Resume</h3>
+              <p className="text-muted-foreground font-montserrat mb-6">Get a detailed overview of my experience and skills</p>
+              <a href="/resume">
+                <Button className="w-full hover-lift">
+                  <Download className="mr-2 h-4 w-4" />
+                  View Resume
+                </Button>
+              </a>
+            </div>
+
           </div>
         </div>
 
