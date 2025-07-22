@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -28,25 +29,51 @@ export const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Message sent successfully!",
-      description: "Thank you for reaching out. I'll get back to you within 24 hours."
-    });
+    try {
+      // EmailJS configuration
+      const serviceId = 'service_ivs87x2';
+      const templateId = 'template_65rx1xi';
+      const publicKey = 'PIl9ucNEGRnD8YGS4';
 
-    // Reset form after animation
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: ""
+      // Prepare template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_name: 'Christian Kevin Flores',
+        reply_to: formData.email,
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      toast({
+        title: "Message sent successfully!",
+        description: "Thank you for reaching out. I'll get back to you within 24 hours."
       });
-      setIsSubmitted(false);
-    }, 3000);
+
+      // Reset form after animation
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setIsSubmitting(false);
+      toast({
+        title: "Failed to send message",
+        description: "There was an error sending your message. Please try again or contact me directly.",
+        variant: "destructive"
+      });
+    }
   };
 
   const socialLinks = [{
