@@ -21,8 +21,8 @@ const projects = [
     beforeImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
     description: "Modern e-commerce landing page with 40% conversion rate improvement",
     tech: ["Figma", "Webflow", "Analytics"],
-    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project1" // 👈 UPDATE: Replace with your GitHub/case study URL
+    liveUrl: "https://conversion-zen.lovable.app",
+    codeUrl: "https://yoursite.com/case-study-1" // 👈 UPDATE: Replace with your case study URL
   },
   {
     id: 2,
@@ -32,8 +32,8 @@ const projects = [
     beforeImage: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=600&h=400&fit=crop",
     description: "B2B landing page generating 300% more qualified leads",
     tech: ["Adobe XD", "Optimize", "HubSpot"],
-    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project2" // 👈 UPDATE: Replace with your GitHub/case study URL
+    liveUrl: "https://enterprise-lead-gen.lovable.app",
+    codeUrl: "https://yoursite.com/case-study-2" // 👈 UPDATE: Replace with your case study URL
   },
   {
     id: 3,
@@ -43,8 +43,8 @@ const projects = [
     beforeImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
     description: "Startup landing page that secured $2M in seed funding",
     tech: ["Figma", "React", "Framer Motion"],
-    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project3" // 👈 UPDATE: Replace with your GitHub/case study URL
+    liveUrl: "https://startup-mvp-landing.lovable.app",
+    codeUrl: "https://yoursite.com/case-study-3" // 👈 UPDATE: Replace with your case study URL
   },
 
   // ========== FUNNELS (3 projects max) ==========
@@ -209,7 +209,7 @@ export const PortfolioSection = () => {
                     size="sm" 
                     className="flex-1"
                     onClick={() => window.open(project.liveUrl, '_blank')}
-                    disabled={project.liveUrl === "#" || project.liveUrl === "https://yoursite.com"}
+                    disabled={project.liveUrl.includes("yoursite.com")}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Live Demo
@@ -219,7 +219,7 @@ export const PortfolioSection = () => {
                     variant="outline" 
                     className="flex-1"
                     onClick={() => window.open(project.codeUrl, '_blank')}
-                    disabled={project.codeUrl === "#" || project.codeUrl.includes("yourusername")}
+                    disabled={project.codeUrl.includes("yourusername") || project.codeUrl.includes("github.com")}
                   >
                     <Github className="h-4 w-4 mr-2" />
                     View Case
