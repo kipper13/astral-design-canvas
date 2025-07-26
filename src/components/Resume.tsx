@@ -173,7 +173,7 @@ export const Resume = () => {
                     <Award className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-poppins font-semibold text-foreground">50+ Projects</p>
+                    <p className="font-poppins font-semibold text-foreground">30+ Projects</p>
                     <p className="text-sm text-muted-foreground font-montserrat">Successfully Completed</p>
                   </div>
                 </div>
@@ -195,7 +195,7 @@ export const Resume = () => {
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-poppins font-semibold text-foreground">98% Client</p>
+                    <p className="font-poppins font-semibold text-foreground">87% Client</p>
                     <p className="text-sm text-muted-foreground font-montserrat">Satisfaction Rate</p>
                   </div>
                 </div>
