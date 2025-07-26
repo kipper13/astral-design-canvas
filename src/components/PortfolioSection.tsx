@@ -56,8 +56,8 @@ const projects = [
     beforeImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
     description: "Complete sales funnel optimization increasing MRR by 65%",
     tech: ["Sketch", "InVision", "Hotjar"],
-    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project4" // 👈 UPDATE: Replace with your GitHub/case study URL
+    liveUrl: "https://mrrove-magic-funnel.lovable.app",
+    codeUrl: null // No case study button for this project
   },
   {
     id: 5,
@@ -67,8 +67,8 @@ const projects = [
     beforeImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
     description: "Multi-step funnel with 85% completion rate optimization",
     tech: ["Figma", "Unbounce", "Google Analytics"],
-    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project5" // 👈 UPDATE: Replace with your GitHub/case study URL
+    liveUrl: "https://electric-checkout-funnel.lovable.app",
+    codeUrl: null // No case study button for this project
   },
   {
     id: 6,
@@ -78,8 +78,8 @@ const projects = [
     beforeImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
     description: "Automated email funnel increasing customer lifetime value by 120%",
     tech: ["Mailchimp", "Zapier", "ConvertKit"],
-    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project6" // 👈 UPDATE: Replace with your GitHub/case study URL
+    liveUrl: "https://dark-bloom-funnel.lovable.app",
+    codeUrl: null // No case study button for this project
   },
 
   // ========== UI/UX DESIGN (3 projects max) ==========
@@ -207,23 +207,25 @@ export const PortfolioSection = () => {
                 <div className="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <Button 
                     size="sm" 
-                    className="flex-1"
+                    className={project.codeUrl ? "flex-1" : "w-full"}
                     onClick={() => window.open(project.liveUrl, '_blank')}
                     disabled={project.liveUrl.includes("yoursite.com")}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Live Demo
                   </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="flex-1"
-                    onClick={() => window.open(project.codeUrl, '_blank')}
-                    disabled={project.codeUrl.includes("yourusername") || project.codeUrl.includes("github.com")}
-                  >
-                    <Github className="h-4 w-4 mr-2" />
-                    View Case
-                  </Button>
+                  {project.codeUrl && (
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="flex-1"
+                      onClick={() => window.open(project.codeUrl, '_blank')}
+                      disabled={project.codeUrl.includes("yourusername") || project.codeUrl.includes("github.com")}
+                    >
+                      <Github className="h-4 w-4 mr-2" />
+                      View Case
+                    </Button>
+                  )}
                 </div>
               </div>
 
