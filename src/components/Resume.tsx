@@ -1,25 +1,17 @@
-
 import React from 'react';
 import { Download, Mail, Phone, MapPin, Calendar, Award, TrendingUp, Users, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
 export const Resume = () => {
   const handleDownloadPDF = () => {
     window.print();
   };
-
-  return (
-    <div className="min-h-screen bg-background py-8 px-4">
+  return <div className="min-h-screen bg-background py-8 px-4">
       <div className="max-w-4xl mx-auto bg-card border border-border rounded-lg shadow-lg overflow-hidden">
         {/* Header Section */}
         <div className="bg-gradient-to-r from-primary to-accent text-white p-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="flex-shrink-0">
-              <img 
-                src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png"
-                alt="Christian Kevin Flores"
-                className="w-32 h-32 rounded-full border-4 border-white object-cover"
-              />
+              <img src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png" alt="Christian Kevin Flores" className="w-32 h-32 rounded-full border-4 border-white object-cover" />
             </div>
             <div className="text-center md:text-left flex-1">
               <h1 className="text-4xl font-poppins font-bold mb-2">Christian Kevin Flores</h1>
@@ -78,7 +70,9 @@ export const Resume = () => {
                     <span className="text-primary font-semibold">95%</span>
                   </div>
                   <div className="w-full bg-border rounded-full h-2">
-                    <div className="bg-gradient-to-r from-primary to-accent h-2 rounded-full" style={{ width: '95%' }}></div>
+                    <div className="bg-gradient-to-r from-primary to-accent h-2 rounded-full" style={{
+                    width: '95%'
+                  }}></div>
                   </div>
                   
                   <div className="flex justify-between items-center">
@@ -86,7 +80,9 @@ export const Resume = () => {
                     <span className="text-primary font-semibold">90%</span>
                   </div>
                   <div className="w-full bg-border rounded-full h-2">
-                    <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+                    <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style={{
+                    width: '90%'
+                  }}></div>
                   </div>
                   
                   <div className="flex justify-between items-center">
@@ -94,7 +90,9 @@ export const Resume = () => {
                     <span className="text-primary font-semibold">85%</span>
                   </div>
                   <div className="w-full bg-border rounded-full h-2">
-                    <div className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+                    <div className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full" style={{
+                    width: '85%'
+                  }}></div>
                   </div>
                   
                   <div className="flex justify-between items-center">
@@ -102,7 +100,9 @@ export const Resume = () => {
                     <span className="text-primary font-semibold">75%</span>
                   </div>
                   <div className="w-full bg-border rounded-full h-2">
-                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style={{
+                    width: '75%'
+                  }}></div>
                   </div>
                 </div>
               </div>
@@ -110,14 +110,9 @@ export const Resume = () => {
               <div>
                 <h4 className="font-poppins font-semibold text-foreground mb-3">Tools & Technologies</h4>
                 <div className="grid grid-cols-2 gap-2">
-                  {[
-                    "Figma", "Adobe XD", "Sketch", "Webflow", 
-                    "React", "Analytics", "Photoshop", "Illustrator"
-                  ].map((tool) => (
-                    <div key={tool} className="bg-muted rounded-lg p-2 text-center">
+                  {["Figma", "Adobe XD", "Sketch", "Webflow", "React", "Analytics", "Photoshop", "Illustrator"].map(tool => <div key={tool} className="bg-muted rounded-lg p-2 text-center">
                       <span className="font-montserrat text-sm">{tool}</span>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </div>
             </div>
@@ -224,29 +219,22 @@ export const Resume = () => {
               Services Offered
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
-              {[
-                {
-                  title: "Landing Page Design",
-                  description: "High-converting landing pages with A/B testing and mobile-first approach"
-                },
-                {
-                  title: "Funnel Optimization",
-                  description: "Strategic funnel design with analytics integration and CRO strategy"
-                },
-                {
-                  title: "UI/UX Design",
-                  description: "User research, wireframing, prototyping, and usability testing"
-                },
-                {
-                  title: "Branding",
-                  description: "Logo design, brand guidelines, visual identity, and brand strategy"
-                }
-              ].map((service, index) => (
-                <div key={index} className="p-4 border border-border rounded-lg">
+              {[{
+              title: "Landing Page Design",
+              description: "High-converting landing pages with A/B testing and mobile-first approach"
+            }, {
+              title: "Funnel Optimization",
+              description: "Strategic funnel design with analytics integration and CRO strategy"
+            }, {
+              title: "UI/UX Design",
+              description: "User research, wireframing, prototyping, and usability testing"
+            }, {
+              title: "Branding",
+              description: "Logo design, brand guidelines, visual identity, and brand strategy"
+            }].map((service, index) => <div key={index} className="p-4 border border-border rounded-lg">
                   <h4 className="font-poppins font-semibold text-foreground mb-2">{service.title}</h4>
                   <p className="text-sm text-muted-foreground font-montserrat">{service.description}</p>
-                </div>
-              ))}
+                </div>)}
             </div>
           </section>
 
@@ -258,26 +246,18 @@ export const Resume = () => {
             <div className="space-y-4">
               <div className="border-l-4 border-primary pl-6">
                 <h4 className="text-lg font-poppins font-semibold text-foreground">Bachelor of Science in Information Technology</h4>
-                <p className="text-primary font-montserrat">University of the Philippines - 2019</p>
+                <p className="text-primary font-montserrat">ACLC COLLEGE of BUKIDNON - 2020</p>
                 <p className="text-muted-foreground font-montserrat text-sm">Specialized in Web Development and User Interface Design</p>
               </div>
               
               <div className="grid md:grid-cols-2 gap-4 mt-6">
-                {[
-                  "Google UX Design Certificate",
-                  "Adobe Certified Expert (ACE)",
-                  "Figma Advanced Certification",
-                  "JavaScript ES6+ Certification"
-                ].map((cert, index) => (
-                  <div key={index} className="p-3 bg-muted rounded-lg">
+                {["Google UX Design Certificate", "Adobe Certified Expert (ACE)", "Figma Advanced Certification", "JavaScript ES6+ Certification"].map((cert, index) => <div key={index} className="p-3 bg-muted rounded-lg">
                     <p className="font-montserrat text-sm text-foreground">{cert}</p>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
           </section>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
