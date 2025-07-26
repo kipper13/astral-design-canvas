@@ -130,7 +130,7 @@ export const ServicesSection = () => {
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { number: "30+", label: "Projects Completed" },
-            { number: "98%", label: "Client Satisfaction" },
+            { number: "87%", label: "Client Satisfaction" },
             { number: "25%", label: "Average Conversion Boost" },
             { number: "3+", label: "Years Experience" }
           ].map((stat, index) => (
