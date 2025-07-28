@@ -115,15 +115,6 @@ export const ContactSection = () => {
       <div className="absolute bottom-32 left-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-poppins font-bold text-foreground mb-6">
-            Let's Work <span className="gradient-text">Together</span>
-          </h2>
-          <p className="text-xl text-muted-foreground font-montserrat max-w-3xl mx-auto">
-            Ready to transform your digital presence? Let's discuss your project and create 
-            something amazing together.
-          </p>
-        </div>
 
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
