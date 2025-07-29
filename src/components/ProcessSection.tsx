@@ -159,21 +159,6 @@ export const ProcessSection = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="mt-20 text-center">
-          <div className="bg-card border border-border rounded-2xl p-8 hover-lift max-w-2xl mx-auto">
-            <h3 className="text-2xl font-poppins font-bold text-foreground mb-4">
-              Ready to Start Your Project?
-            </h3>
-            <p className="text-muted-foreground font-montserrat mb-6">
-              Let's discuss how my proven process can help bring your vision to life 
-              and achieve your business goals.
-            </p>
-            <button className="px-8 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-montserrat font-semibold hover:scale-105 transition-transform shadow-lg">
-              Start Your Project
-            </button>
-          </div>
-        </div>
       </div>
     </section>
   );
