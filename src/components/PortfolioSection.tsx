@@ -22,7 +22,7 @@ const projects = [
     description: "Modern e-commerce landing page with 40% conversion rate improvement",
     tech: ["Figma", "Webflow", "Analytics"],
     liveUrl: "https://conversion-zen.lovable.app",
-    codeUrl: "https://yoursite.com/case-study-1" // 👈 UPDATE: Replace with your case study URL
+    codeUrl: null // No case study button for this project
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const projects = [
     description: "B2B landing page generating 300% more qualified leads",
     tech: ["Adobe XD", "Optimize", "HubSpot"],
     liveUrl: "https://enterprise-lead-gen.lovable.app",
-    codeUrl: "https://yoursite.com/case-study-2" // 👈 UPDATE: Replace with your case study URL
+    codeUrl: null // No case study button for this project
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const projects = [
     description: "Startup landing page that secured $2M in seed funding",
     tech: ["Figma", "React", "Framer Motion"],
     liveUrl: "https://startup-mvp-landing.lovable.app",
-    codeUrl: "https://yoursite.com/case-study-3" // 👈 UPDATE: Replace with your case study URL
+    codeUrl: null // No case study button for this project
   },
 
   // ========== FUNNELS (3 projects max) ==========
@@ -92,7 +92,7 @@ const projects = [
     description: "Intuitive mobile app design with enhanced user experience",
     tech: ["Figma", "Principle", "Zeplin"],
     liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project7" // 👈 UPDATE: Replace with your GitHub/case study URL
+    codeUrl: null // No case study button for this project
   },
   {
     id: 8,
@@ -103,7 +103,7 @@ const projects = [
     description: "Clean dashboard design improving user task completion by 45%",
     tech: ["Sketch", "InVision", "Maze"],
     liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project8" // 👈 UPDATE: Replace with your GitHub/case study URL
+    codeUrl: null // No case study button for this project
   },
   {
     id: 9,
@@ -114,7 +114,7 @@ const projects = [
     description: "Educational platform redesign increasing student engagement by 60%",
     tech: ["Figma", "Protopie", "Maze"],
     liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
-    codeUrl: "https://github.com/yourusername/project9" // 👈 UPDATE: Replace with your GitHub/case study URL
+    codeUrl: null // No case study button for this project
   }
 ];
 
