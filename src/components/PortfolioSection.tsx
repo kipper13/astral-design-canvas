@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { ExternalLink, Github, Filter } from "lucide-react";
+import { ExternalLink, Github, Filter, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
 import portfolio3 from "@/assets/portfolio-3.jpg";
@@ -115,19 +116,56 @@ const projects = [
     tech: ["Figma", "Protopie", "Maze"],
     liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
     codeUrl: null // No case study button for this project
+  },
+
+  // ========== EMAIL TEMPLATES (3 projects max) ==========
+  {
+    id: 10,
+    title: "Welcome Email Series",
+    category: "email",
+    image: "https://images.unsplash.com/photo-1557200134-90327ee9fce4?w=600&h=400&fit=crop",
+    beforeImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
+    description: "Engaging welcome email sequence with 85% open rate and improved onboarding",
+    tech: ["Mailchimp", "Figma", "HTML/CSS"],
+    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
+    codeUrl: null // No case study button for this project
+  },
+  {
+    id: 11,
+    title: "Newsletter Template",
+    category: "email",
+    image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600&h=400&fit=crop",
+    beforeImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+    description: "Modern newsletter design increasing subscriber engagement by 60%",
+    tech: ["Mailchimp", "Canva", "HTML"],
+    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
+    codeUrl: null // No case study button for this project
+  },
+  {
+    id: 12,
+    title: "E-commerce Email Campaign",
+    category: "email",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
+    beforeImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+    description: "Product promotion email template boosting sales conversion by 45%",
+    tech: ["Klaviyo", "Photoshop", "HTML/CSS"],
+    liveUrl: "https://yoursite.com", // 👈 UPDATE: Replace with your actual project URL
+    codeUrl: null // No case study button for this project
   }
 ];
+
+import { TrendingUp, Palette } from "lucide-react";
 
 const categories = [
   { id: "all", label: "All Projects", icon: Filter },
   { id: "landing", label: "Landing Pages", icon: ExternalLink },
   { id: "funnel", label: "Funnels", icon: TrendingUp },
-  { id: "design", label: "UI/UX", icon: Palette }
+  { id: "design", label: "UI/UX", icon: Palette },
+  { id: "email", label: "Email Templates", icon: Mail }
 ];
 
-import { TrendingUp, Palette } from "lucide-react";
-
 export const PortfolioSection = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -138,7 +176,8 @@ export const PortfolioSection = () => {
       const landingProjects = projects.filter(p => p.category === "landing").slice(0, 3);
       const funnelProjects = projects.filter(p => p.category === "funnel").slice(0, 3);
       const designProjects = projects.filter(p => p.category === "design").slice(0, 3);
-      setFilteredProjects([...landingProjects, ...funnelProjects, ...designProjects]);
+      const emailProjects = projects.filter(p => p.category === "email").slice(0, 3);
+      setFilteredProjects([...landingProjects, ...funnelProjects, ...designProjects, ...emailProjects]);
     } else {
       // Show maximum 3 projects for the selected category
       setFilteredProjects(projects.filter(project => project.category === activeCategory).slice(0, 3));
@@ -262,7 +301,12 @@ export const PortfolioSection = () => {
 
         {/* View More Button */}
         <div className="text-center mt-12">
-          <Button size="lg" variant="outline" className="hover-lift font-montserrat font-semibold px-8">
+          <Button 
+            size="lg" 
+            variant="outline" 
+            className="hover-lift font-montserrat font-semibold px-8"
+            onClick={() => navigate('/gallery/landing-pages')}
+          >
             View All Projects
             <ExternalLink className="ml-2 h-5 w-5" />
           </Button>

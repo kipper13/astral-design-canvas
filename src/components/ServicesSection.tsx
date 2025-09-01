@@ -1,7 +1,9 @@
-import { useEffect } from "react";
-import { Palette, TrendingUp, Smartphone, Award } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Palette, TrendingUp, Smartphone, Award, Star, ArrowRight, Github } from "lucide-react";
 import { AnimatedSection, StaggeredContainer, AnimatedCounter } from "@/components/ui/animated-section";
 import { useMagneticHover } from "@/hooks/use-animations";
+import { Button } from "@/components/ui/button";
+import gsap from "gsap";
 
 const services = [
   {
@@ -9,32 +11,126 @@ const services = [
     title: "Landing Page Design",
     description: "High-converting landing pages that capture attention and drive action.",
     features: ["Conversion Optimization", "A/B Testing", "Mobile First", "Fast Loading"],
-    color: "from-blue-500 to-purple-600"
+    color: "from-blue-500 to-purple-600",
+    technologies: ["Figma", "Webflow", "React", "Analytics"],
+    beforeResult: "2.3% conversion rate",
+    afterResult: "8.7% conversion rate",
+    testimonial: {
+      text: "The landing page design increased our conversions by 275%. Incredible results!",
+      author: "Sarah Johnson",
+      company: "TechStart Inc.",
+      rating: 5
+    },
+    processSteps: [
+      "Research & Analysis",
+      "Wireframe & Design",
+      "Development & Testing",
+      "Launch & Optimize"
+    ]
   },
   {
     icon: TrendingUp,
     title: "Funnel Optimization",
     description: "Strategic funnel design that maximizes conversions at every step.",
     features: ["Analytics Integration", "User Flow Mapping", "CRO Strategy", "Performance Tracking"],
-    color: "from-green-500 to-blue-600"
+    color: "from-green-500 to-blue-600",
+    technologies: ["Google Analytics", "Hotjar", "Optimize", "HubSpot"],
+    beforeResult: "45% drop-off rate",
+    afterResult: "12% drop-off rate",
+    testimonial: {
+      text: "Our funnel optimization resulted in 300% more qualified leads. Outstanding work!",
+      author: "Michael Chen",
+      company: "Growth Labs",
+      rating: 5
+    },
+    processSteps: [
+      "Funnel Audit",
+      "Optimization Strategy",
+      "Implementation",
+      "Monitor & Iterate"
+    ]
   },
   {
     icon: Smartphone,
     title: "UI/UX Design",
     description: "Intuitive interfaces that provide exceptional user experiences.",
     features: ["User Research", "Wireframing", "Prototyping", "Usability Testing"],
-    color: "from-pink-500 to-red-600"
+    color: "from-pink-500 to-red-600",
+    technologies: ["Figma", "Sketch", "Principle", "Maze"],
+    beforeResult: "3.2/5 user satisfaction",
+    afterResult: "4.8/5 user satisfaction",
+    testimonial: {
+      text: "The UI/UX redesign transformed our app. Users love the new interface!",
+      author: "Emma Rodriguez",
+      company: "AppVenture",
+      rating: 5
+    },
+    processSteps: [
+      "User Research",
+      "Design System",
+      "Prototype & Test",
+      "Final Implementation"
+    ]
   },
   {
     icon: Award,
     title: "Branding",
     description: "Cohesive brand identities that resonate with your target audience.",
     features: ["Logo Design", "Brand Guidelines", "Visual Identity", "Brand Strategy"],
-    color: "from-yellow-500 to-orange-600"
+    color: "from-yellow-500 to-orange-600",
+    technologies: ["Illustrator", "Photoshop", "Figma", "InDesign"],
+    beforeResult: "Low brand recognition",
+    afterResult: "85% brand recall",
+    testimonial: {
+      text: "Our new brand identity perfectly captures our vision. Professional and impactful!",
+      author: "David Thompson",
+      company: "Innovative Solutions",
+      rating: 5
+    },
+    processSteps: [
+      "Brand Discovery",
+      "Concept Development",
+      "Design Execution",
+      "Brand Guidelines"
+    ]
   }
 ];
 
 export const ServicesSection = () => {
+  const [activeService, setActiveService] = useState<number | null>(null);
+  
+  useEffect(() => {
+    // Create floating particles animation
+    const createFloatingParticles = () => {
+      const particles = document.querySelectorAll('.floating-particle');
+      particles.forEach((particle, index) => {
+        gsap.to(particle, {
+          y: "-=20",
+          x: "+=10",
+          rotation: 360,
+          duration: 4 + index * 0.5,
+          ease: "none",
+          repeat: -1,
+          yoyo: true
+        });
+      });
+    };
+
+    // Animate morphing shapes
+    const animateMorphingShapes = () => {
+      gsap.to(".morphing-shape", {
+        scale: 1.2,
+        rotation: 180,
+        duration: 8,
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+    };
+
+    createFloatingParticles();
+    animateMorphingShapes();
+  }, []);
   return (
     <AnimatedSection 
       id="services" 
@@ -42,19 +138,53 @@ export const ServicesSection = () => {
       animationType="fadeUp"
       delay={0.2}
     >
-      {/* Background Elements */}
-      <div className="absolute top-20 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-60 h-60 bg-accent/10 rounded-full blur-3xl"></div>
+      {/* Enhanced Background Elements with Floating Particles */}
+      <div className="absolute top-20 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl morphing-shape"></div>
+      <div className="absolute bottom-20 left-10 w-60 h-60 bg-accent/10 rounded-full blur-3xl morphing-shape"></div>
+      
+      {/* Floating Particles */}
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={i}
+          className={`floating-particle absolute w-2 h-2 bg-primary/20 rounded-full`}
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${i * 0.5}s`
+          }}
+        />
+      ))}
       
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-poppins font-bold text-foreground mb-6">
             What I Do <span className="gradient-text">Best</span>
           </h2>
-          <p className="text-xl text-muted-foreground font-montserrat max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground font-montserrat max-w-3xl mx-auto mb-8">
             Specialized services that combine creativity with data-driven strategies 
             to deliver exceptional results for your business.
           </p>
+          
+          {/* GitHub Button */}
+          <div className="flex justify-center">
+            <a 
+              href="https://github.com/kipper13" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="group relative overflow-hidden font-montserrat font-bold px-10 py-4 text-lg border-2 border-primary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground"
+              >
+                <span className="relative z-10 flex items-center">
+                  <Github className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                  View My GitHub
+                  <span className="ml-2 opacity-60 group-hover:opacity-100 transition-opacity">@kipper13</span>
+                </span>
+              </Button>
+            </a>
+          </div>
         </div>
 
         <StaggeredContainer 
@@ -62,38 +192,115 @@ export const ServicesSection = () => {
           staggerDelay={0.1}
         >
           {services.map((service, index) => (
-            <ServiceCard key={service.title} service={service} index={index} />
+            <ServiceCard 
+              key={service.title} 
+              service={service} 
+              index={index}
+              isActive={activeService === index}
+              setActive={setActiveService}
+            />
           ))}
         </StaggeredContainer>
 
-        {/* Enhanced Stats Section */}
-        <StaggeredContainer className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
-          <StatCard number={30} label="Projects Completed" suffix="+" />
-          <StatCard number={87} label="Client Satisfaction" suffix="%" />
-          <StatCard number={25} label="Average Conversion Boost" suffix="%" />
-          <StatCard number={3} label="Years Experience" suffix="+" />
-        </StaggeredContainer>
+        {/* Client Success Stories */}
+        <div className="mt-16 text-center">
+          <h3 className="text-2xl md:text-3xl font-poppins font-bold text-foreground mb-8">
+            Client <span className="gradient-text">Success Stories</span>
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {services.slice(0, 3).map((service, index) => (
+              <div key={index} className="bg-card border border-border rounded-xl p-6 hover-lift">
+                <div className="flex items-center mb-4">
+                  {[...Array(service.testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground font-montserrat text-sm mb-4 leading-relaxed">
+                  "{service.testimonial.text}"
+                </p>
+                <div className="flex items-center">
+                  <div className={`w-10 h-10 bg-gradient-to-br ${service.color} rounded-full flex items-center justify-center mr-3`}>
+                    <span className="text-white text-sm font-bold">
+                      {service.testimonial.author.charAt(0)}
+                    </span>
+                  </div>
+                  <div className="text-left">
+                    <div className="font-semibold text-foreground text-sm">{service.testimonial.author}</div>
+                    <div className="text-xs text-muted-foreground">{service.testimonial.company}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </AnimatedSection>
   );
 };
 
-// Individual Service Card Component
-const ServiceCard = ({ service, index }: { service: any; index: number }) => {
+// Tab Button Component
+const TabButton = ({ label, active = false }: { label: string; active?: boolean }) => (
+  <button 
+    className={`px-3 py-1 text-xs rounded-lg transition-colors ${
+      active 
+        ? 'bg-primary text-primary-foreground' 
+        : 'bg-muted text-muted-foreground hover:bg-primary/10'
+    }`}
+  >
+    {label}
+  </button>
+);
+
+// Enhanced Service Card Component with all features
+const ServiceCard = ({ service, index, isActive, setActive }: { 
+  service: any; 
+  index: number; 
+  isActive: boolean;
+  setActive: (index: number | null) => void;
+}) => {
   const magneticRef = useMagneticHover(0.2) as React.RefObject<HTMLDivElement>;
+  const iconRef = React.useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    // Animate icon on hover
+    const animateIcon = () => {
+      if (iconRef.current) {
+        gsap.to(iconRef.current, {
+          rotation: 360,
+          scale: 1.1,
+          duration: 0.6,
+          ease: "back.out(1.7)"
+        });
+      }
+    };
+
+    const element = magneticRef.current;
+    if (element) {
+      element.addEventListener('mouseenter', animateIcon);
+      return () => element.removeEventListener('mouseenter', animateIcon);
+    }
+  }, []);
   
   return (
     <div
       ref={magneticRef}
-      className="service-card flip-card h-80"
+      className="service-card flip-card h-96"
       data-cursor="hover"
       data-cursor-text="View Details"
+      onMouseEnter={() => setActive(index)}
+      onMouseLeave={() => setActive(null)}
     >
       <div className="flip-card-inner">
-        {/* Front Side */}
-        <div className="flip-card-front bg-card border border-border rounded-2xl p-6 hover-lift hover-glow">
-          <div className="h-full flex flex-col items-center text-center space-y-4">
-            <div className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center shadow-lg`}>
+        {/* Enhanced Front Side */}
+        <div className="flip-card-front bg-card border border-border rounded-2xl p-6 hover-lift hover-glow relative overflow-hidden">
+          {/* Animated Background Gradient */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-5 transition-opacity duration-300 hover:opacity-10`} />
+          
+          <div className="h-full flex flex-col items-center text-center space-y-4 relative z-10">
+            <div 
+              ref={iconRef}
+              className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center shadow-lg`}
+            >
               <service.icon className="h-10 w-10 text-white" />
             </div>
             
@@ -104,6 +311,16 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
             <p className="text-muted-foreground font-montserrat leading-relaxed">
               {service.description}
             </p>
+
+            {/* Before/After Results */}
+            <div className="space-y-2">
+              <div className="text-sm text-muted-foreground">
+                <span className="text-red-500">Before:</span> {service.beforeResult}
+              </div>
+              <div className="text-sm text-green-500 font-semibold">
+                <span>After:</span> {service.afterResult}
+              </div>
+            </div>
             
             <div className="mt-auto">
               <div className={`w-16 h-1 bg-gradient-to-r ${service.color} rounded-full`}></div>
@@ -111,53 +328,90 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
           </div>
         </div>
 
-        {/* Back Side */}
-        <div className="flip-card-back bg-card border border-border rounded-2xl p-6">
-          <div className="h-full flex flex-col justify-center space-y-4">
-            <h3 className="text-xl font-poppins font-bold text-foreground text-center mb-4">
-              Key Features
-            </h3>
+        {/* Enhanced Back Side with Multiple Tabs */}
+        <div className="flip-card-back bg-card border border-border rounded-2xl p-4 overflow-hidden">
+          <div className="h-full flex flex-col">
+            {/* Tab Navigation */}
+            <div className="flex space-x-1 mb-4">
+              <TabButton label="Process" active={true} />
+              <TabButton label="Tech" />
+              <TabButton label="Review" />
+            </div>
             
-            <ul className="space-y-3">
-              {service.features.map((feature: string, idx: number) => (
-                <li key={idx} className="flex items-center text-muted-foreground font-montserrat">
-                  <div className={`w-2 h-2 bg-gradient-to-r ${service.color} rounded-full mr-3`}></div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            {/* Process Steps */}
+            <div className="flex-1 space-y-3">
+              <h3 className="text-lg font-poppins font-bold text-foreground text-center">
+                Process Steps
+              </h3>
+              
+              <div className="space-y-2">
+                {service.processSteps.map((step: string, idx: number) => (
+                  <div key={idx} className="flex items-center text-sm text-muted-foreground font-montserrat">
+                    <div className={`w-6 h-6 bg-gradient-to-r ${service.color} rounded-full flex items-center justify-center mr-3 text-white text-xs font-bold`}>
+                      {idx + 1}
+                    </div>
+                    {step}
+                  </div>
+                ))}
+              </div>
+
+              {/* Technologies Used */}
+              <div className="mt-4">
+                <h4 className="text-sm font-semibold text-foreground mb-2">Technologies:</h4>
+                <div className="flex flex-wrap gap-1">
+                  {service.technologies.map((tech: string, idx: number) => (
+                    <span
+                      key={idx}
+                      className={`px-2 py-1 bg-gradient-to-r ${service.color} text-white text-xs rounded-full opacity-90`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
             
             <div className="mt-auto pt-4">
               <button 
-                className={`w-full py-3 bg-gradient-to-r ${service.color} text-white rounded-xl font-montserrat font-semibold hover:scale-105 transition-transform`}
+                className={`w-full py-2 bg-gradient-to-r ${service.color} text-white rounded-xl font-montserrat font-semibold hover:scale-105 transition-transform text-sm flex items-center justify-center`}
                 data-cursor="button"
               >
-                Learn More
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Client Testimonial Overlay */}
+      {isActive && (
+        <div className="absolute -bottom-20 left-0 right-0 bg-card border border-border rounded-xl p-4 shadow-lg z-20 transform transition-all duration-300">
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">
+                  {service.testimonial.author.charAt(0)}
+                </span>
+              </div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center mb-1">
+                {[...Array(service.testimonial.rating)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-2">
+                "{service.testimonial.text}"
+              </p>
+              <div className="text-xs">
+                <span className="font-semibold text-foreground">{service.testimonial.author}</span>
+                <span className="text-muted-foreground"> - {service.testimonial.company}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-// Individual Stat Card Component
-const StatCard = ({ number, label, suffix }: { number: number; label: string; suffix: string }) => {
-  const magneticRef = useMagneticHover(0.1) as React.RefObject<HTMLDivElement>;
-  
-  return (
-    <div
-      ref={magneticRef}
-      className="text-center p-6 bg-card border border-border rounded-2xl hover-lift"
-      data-cursor="hover"
-    >
-      <div className="text-3xl md:text-4xl font-poppins font-bold gradient-text mb-2">
-        <AnimatedCounter to={number} suffix={suffix} duration={2.5} />
-      </div>
-      <div className="text-muted-foreground font-montserrat text-sm">
-        {label}
-      </div>
-    </div>
-  );
-};

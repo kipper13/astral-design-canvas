@@ -9,6 +9,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { EnhancedCursor } from "@/components/ui/enhanced-cursor";
 import Index from "./pages/Index";
 import Resume from "./pages/Resume";
+import LandingPagesGallery from "./pages/LandingPagesGallery";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/resume" element={<Resume />} />
+            <Route path="/gallery/landing-pages" element={<LandingPagesGallery />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

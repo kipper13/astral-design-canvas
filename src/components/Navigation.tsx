@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import gsap from "gsap";
 
 export const Navigation = () => {
   const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const logoRef = useRef<HTMLDivElement>(null);
+  const logoTextRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     // Check for saved theme preference or default to light
@@ -15,6 +18,44 @@ export const Navigation = () => {
     if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
       setIsDark(true);
       document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  useEffect(() => {
+    // Logo entrance animation - slower and more subtle
+    if (logoRef.current && logoTextRef.current) {
+      gsap.fromTo(logoRef.current, 
+        { 
+          opacity: 0, 
+          y: -10,
+          scale: 0.95 
+        },
+        { 
+          opacity: 1, 
+          y: 0,
+          scale: 1,
+          duration: 1.5,
+          ease: "power2.out",
+          delay: 0.3
+        }
+      );
+
+      // Very subtle pulse animation
+      gsap.to(logoRef.current, {
+        scale: 1.01,
+        duration: 4,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+
+      // Slower text shimmer effect
+      gsap.to(logoTextRef.current, {
+        backgroundPosition: "200% 0%",
+        duration: 6,
+        ease: "none",
+        repeat: -1
+      });
     }
   }, []);
 
@@ -51,6 +92,47 @@ export const Navigation = () => {
     setIsMenuOpen(false);
   };
 
+  const handleLogoHover = () => {
+    if (logoRef.current) {
+      gsap.to(logoRef.current, {
+        scale: 1.05,
+        rotation: 1,
+        duration: 0.6,
+        ease: "power2.out"
+      });
+    }
+  };
+
+  const handleLogoLeave = () => {
+    if (logoRef.current) {
+      gsap.to(logoRef.current, {
+        scale: 1,
+        rotation: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      });
+    }
+  };
+
+  const handleLogoClick = () => {
+    if (logoRef.current) {
+      // Subtle click animation
+      gsap.to(logoRef.current, {
+        scale: 0.98,
+        duration: 0.15,
+        ease: "power2.out",
+        onComplete: () => {
+          gsap.to(logoRef.current, {
+            scale: 1,
+            duration: 0.4,
+            ease: "back.out(1.2)"
+          });
+        }
+      });
+    }
+    scrollToSection("hero");
+  };
+
   const navItems = [
     { id: "hero", label: "Home" },
     { id: "services", label: "Services" },
@@ -61,12 +143,23 @@ export const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
-      <div className="container mx-auto px-4 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
+      <div className="container mx-auto px-4 py-2 glass-nav-content">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="text-2xl font-poppins font-bold gradient-text">
-            Kev'nCreates
+          {/* Animated Logo */}
+          <div 
+            ref={logoRef}
+            className="logo-container cursor-pointer"
+            onMouseEnter={handleLogoHover}
+            onMouseLeave={handleLogoLeave}
+            onClick={handleLogoClick}
+          >
+            <span 
+              ref={logoTextRef}
+              className="text-2xl font-poppins font-bold animated-gradient-text"
+            >
+              Kev'nCreates
+            </span>
           </div>
 
           {/* Desktop Navigation */}
@@ -75,19 +168,19 @@ export const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`relative font-montserrat font-medium transition-colors hover:text-primary ${
+                className={`glass-nav-item relative font-montserrat font-light transition-colors hover:text-primary ${
                   activeSection === item.id ? "text-primary" : "text-foreground/80"
                 }`}
               >
                 {item.label}
                 {activeSection === item.id && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full" />
+                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full" />
                 )}
               </button>
             ))}
             
             {/* Magic Theme Toggle */}
-            <div className="magic-toggle-container ml-4">
+            <div className="magic-toggle-container ml-6 glass-nav-item">
               <input
                 type="checkbox"
                 checked={isDark}
@@ -100,7 +193,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu */}
           <div className="flex items-center space-x-4 md:hidden">
-            <div className="magic-toggle-container">
+            <div className="magic-toggle-container glass-nav-item">
               <input
                 type="checkbox"
                 checked={isDark}
@@ -114,6 +207,7 @@ export const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="glass-nav-item"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -128,7 +222,7 @@ export const Navigation = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`text-left font-montserrat font-medium transition-colors hover:text-primary ${
+                  className={`glass-nav-item text-left font-montserrat font-light transition-colors hover:text-primary ${
                     activeSection === item.id ? "text-primary" : "text-foreground/80"
                   }`}
                 >

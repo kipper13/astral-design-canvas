@@ -171,6 +171,56 @@
     animation: gradientShift 3s ease infinite;
   }
   
+  /* Enhanced animated gradient text for logo - subtle version */
+  .animated-gradient-text {
+    background: linear-gradient(
+      45deg,
+      hsl(229, 60%, 55%),
+      hsl(280, 80%, 60%),
+      hsl(11, 85%, 69%),
+      hsl(229, 60%, 55%)
+    );
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: subtleShimmerGradient 8s ease-in-out infinite;
+    display: inline-block;
+    position: relative;
+  }
+  
+  /* Logo container animations - subtle version */
+  .logo-container {
+    position: relative;
+    display: inline-block;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  
+  .logo-container::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(
+      45deg,
+      hsl(229, 60%, 55% / 0.15),
+      hsl(280, 80%, 60% / 0.15),
+      hsl(11, 85%, 69% / 0.15)
+    );
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: -1;
+    filter: blur(8px);
+  }
+  
+  .logo-container:hover::before {
+    opacity: 1;
+  }
+  
   .particles {
     position: absolute;
     width: 100%;
@@ -186,13 +236,47 @@
     animation: particleFloat 15s infinite linear;
   }
   
+  /* Enhanced Loading Screen Animations */
+  .floating-particle {
+    will-change: transform;
+  }
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  
+  @keyframes backgroundPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.05); }
+  }
+  
   .progress-ring {
     transform: rotate(-90deg);
+  }
+  
+  /* Enhanced Services Section Animations */
+  .floating-particle {
+    will-change: transform;
+    animation: particleFloat 15s infinite linear;
+  }
+  
+  .morphing-shape {
+    animation: morphShape 12s ease-in-out infinite;
+  }
+  
+  .service-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.02);
   }
   
   .flip-card {
     background-color: transparent;
     perspective: 1000px;
+    height: 400px;
   }
   
   .flip-card-inner {
@@ -414,6 +498,18 @@
   50% { background-position: 100% 50%; }
 }
 
+@keyframes subtleShimmerGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 /* Enhanced Profile Container Hover Effect */
 .profile-container {
   transition: var(--transition-smooth);
@@ -432,6 +528,25 @@
   transform-style: preserve-3d;
   backface-visibility: hidden;
   position: relative;
+}
+
+@keyframes morphShape {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 50%;
+  }
+  25% {
+    transform: scale(1.1) rotate(90deg);
+    border-radius: 30%;
+  }
+  50% {
+    transform: scale(0.9) rotate(180deg);
+    border-radius: 60%;
+  }
+  75% {
+    transform: scale(1.05) rotate(270deg);
+    border-radius: 40%;
+  }
 }
 
 @keyframes particleFloat {
@@ -484,9 +599,9 @@
   }
 }
 
-/* Magic Theme Toggle */
+/* Magic Theme Toggle - Smaller Size */
 .magic-toggle {
-  --size: 2rem;
+  --size: 1.5rem; /* Reduced from 2rem to 1.5rem for smaller toggle */
   
   appearance: none;
   outline: none;
@@ -543,4 +658,51 @@
 
 .magic-toggle-container:hover {
   background: hsl(var(--accent) / 0.1);
+}
+
+/* Glass Navigation Bar */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(79, 99, 210, 0.15),
+    0 2px 8px rgba(214, 36, 232, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.dark .glass-nav {
+  background: rgba(26, 26, 46, 0.7);
+  border: 1px solid rgba(255, 126, 95, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(255, 126, 95, 0.15),
+    0 2px 8px rgba(255, 126, 95, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-nav-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced glass effect for navigation items */
+.glass-nav-item {
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.glass-nav-item:hover {
+  background: rgba(79, 99, 210, 0.1);
+  box-shadow: 0 4px 16px rgba(79, 99, 210, 0.2);
+  transform: translateY(-1px);
+}
+
+.dark .glass-nav-item:hover {
+  background: rgba(255, 126, 95, 0.1);
+  box-shadow: 0 4px 16px rgba(255, 126, 95, 0.2);
 }

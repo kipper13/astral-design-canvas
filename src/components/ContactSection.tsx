@@ -239,7 +239,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground font-montserrat">Phone</p>
-                    <p className="text-foreground font-montserrat font-semibold">+63 (976) 459-4565</p>
+                    <p className="text-foreground font-montserrat font-semibold">+63 (976) 175-4184</p>
                   </div>
                 </div>
 

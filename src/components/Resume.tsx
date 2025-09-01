@@ -11,7 +11,7 @@ export const Resume = () => {
         <div className="bg-gradient-to-r from-primary to-accent text-white p-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="flex-shrink-0">
-              <img src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png" alt="Christian Kevin Flores" className="w-32 h-32 rounded-full border-4 border-white object-cover" />
+              <img src="/lovable-uploads/profile-photo.png" alt="Christian Kevin Flores" className="w-32 h-32 rounded-full border-4 border-white object-cover" />
             </div>
             <div className="text-center md:text-left flex-1">
               <h1 className="text-4xl font-poppins font-bold mb-2">Christian Kevin Flores</h1>
@@ -110,9 +110,21 @@ export const Resume = () => {
               <div>
                 <h4 className="font-poppins font-semibold text-foreground mb-3">Tools & Technologies</h4>
                 <div className="grid grid-cols-2 gap-2">
-                  {["Figma", "Adobe XD", "Sketch", "Webflow", "React", "Analytics", "Photoshop", "Illustrator"].map(tool => <div key={tool} className="bg-muted rounded-lg p-2 text-center">
-                      <span className="font-montserrat text-sm">{tool}</span>
-                    </div>)}
+                  {[
+                    { name: "Figma", icon: "fab fa-figma", color: "text-purple-500" },
+                    { name: "Adobe XD", icon: "fas fa-vector-square", color: "text-pink-500" },
+                    { name: "Sketch", icon: "fas fa-pencil-ruler", color: "text-orange-500" },
+                    { name: "Webflow", icon: "fas fa-cube", color: "text-blue-500" },
+                    { name: "React", icon: "fab fa-react", color: "text-cyan-400" },
+                    { name: "Framer", icon: "fas fa-magic", color: "text-indigo-500" },
+                    { name: "Photoshop", icon: "fab fa-adobe", color: "text-blue-600" },
+                    { name: "Illustrator", icon: "fas fa-bezier-curve", color: "text-orange-600" }
+                  ].map(tool => 
+                    <div key={tool.name} className="bg-muted rounded-lg p-2 text-center flex flex-col items-center gap-1">
+                      <i className={`${tool.icon} ${tool.color} text-sm`}></i>
+                      <span className="font-montserrat text-xs">{tool.name}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

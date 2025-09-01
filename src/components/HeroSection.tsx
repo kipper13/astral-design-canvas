@@ -1,8 +1,7 @@
 
 import { useEffect, useState, useRef } from "react";
-import { ArrowDown, Download } from "lucide-react";
+import { ArrowDown, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { OptimizedImage } from "@/components/ui/optimized-image";
 // Using relative import to fix path resolution issue
 import { getVideoSources, shouldUseVideoBackground } from "../utils/video-assets";
 
@@ -206,11 +205,10 @@ export const HeroSection = () => {
       case 'image':
         return (
           <>
-            <OptimizedImage
+            <img
               src={heroConfig.backgroundImage!}
               alt="Hero background"
               className="absolute inset-0 w-full h-full object-cover"
-              priority={true}
             />
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20" />
           </>
@@ -261,14 +259,37 @@ export const HeroSection = () => {
                 
                 <div className="profile-card relative w-full h-full bg-gradient-to-br from-card to-card/80 border-2 border-primary/30 rounded-3xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_40px_80px_-12px_hsl(var(--primary)/0.4)] group-hover:border-primary/60 group-hover:-translate-y-4">
                   <div className="relative w-full h-full">
-                    <OptimizedImage
-                      src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png"
+                    {/* Debug Badge */}
+                    <div className="absolute top-2 left-2 z-50 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                      🔍 Profile Loading...
+                    </div>
+                    
+                    {/* Debug: Check if image loads */}
+                    <img
+                      src="/lovable-uploads/profile-photo.png"
                       alt="Christian Kevin Flores - Creative Designer"
                       className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
-                      width={384}
-                      height={384}
-                      priority={true}
-                      placeholder="/placeholder.svg"
+                      loading="eager"
+                      onError={(e) => {
+                        console.error('❌ Profile image failed to load from:', e.currentTarget.src);
+                        console.log('🔄 Trying alternative paths...');
+                        // Try different paths as fallback
+                        const alternatives = [
+                          '/lovable-uploads/4b669d55-1c78-4a05-838c-a1b9a5810a78.png',
+                          '/placeholder.svg'
+                        ];
+                        const currentSrc = e.currentTarget.src;
+                        const nextIndex = alternatives.findIndex(alt => currentSrc.includes(alt.split('/').pop()!)) + 1;
+                        if (nextIndex < alternatives.length) {
+                          e.currentTarget.src = alternatives[nextIndex];
+                        }
+                      }}
+                      onLoad={(e) => {
+                        console.log('✅ Profile image loaded successfully from:', e.currentTarget.src);
+                        // Remove debug badge when image loads
+                        const badge = document.querySelector('.profile-card .absolute.bg-red-500');
+                        if (badge) badge.remove();
+                      }}
                     />
                     
                     {/* Enhanced Gradient Overlay */}
@@ -347,21 +368,7 @@ export const HeroSection = () => {
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 py-6">
-              <div className="text-center lg:text-left">
-                <div className="text-3xl md:text-4xl font-bold text-primary">50+</div>
-                <div className="text-sm text-muted-foreground">Projects Completed</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-3xl md:text-4xl font-bold text-primary">5+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-3xl md:text-4xl font-bold text-primary">98%</div>
-                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
-              </div>
-            </div>
+
 
             {/* Enhanced CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
@@ -376,35 +383,34 @@ export const HeroSection = () => {
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               </Button>
-              
-              <a href="/resume">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="group relative overflow-hidden font-montserrat font-bold px-10 py-4 text-lg border-2 border-primary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground"
-                >
-                  <span className="relative z-10 flex items-center">
-                    <Download className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Download Resume
-                  </span>
-                </Button>
-              </a>
             </div>
 
             {/* Enhanced Social Links */}
-            <div className="flex gap-4 justify-center lg:justify-start pt-6">
+            <div className="flex gap-3 justify-center lg:justify-start pt-6">
+              {/* GitHub - Featured */}
+              <a
+                href="https://github.com/kipper13"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative w-12 h-12 bg-gradient-to-br from-gray-700 to-black rounded-xl flex items-center justify-center hover-lift shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <Github className="text-lg text-white group-hover:scale-125 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </a>
               {[
-                { name: "dribbble", color: "from-pink-500 to-red-500" },
-                { name: "behance", color: "from-blue-600 to-purple-600" },
-                { name: "instagram", color: "from-purple-500 to-pink-500" },
-                { name: "linkedin", color: "from-blue-600 to-blue-800" }
+                { name: "dribbble", color: "from-pink-500 to-red-500", href: "#" },
+                { name: "behance", color: "from-blue-600 to-purple-600", href: "#" },
+                { name: "instagram", color: "from-purple-500 to-pink-500", href: "#" },
+                { name: "linkedin", color: "from-blue-600 to-blue-800", href: "https://www.linkedin.com/in/kevinflores3/" }
               ].map((social) => (
                 <a
                   key={social.name}
-                  href="#"
-                  className={`group relative w-14 h-14 bg-gradient-to-br ${social.color} rounded-xl flex items-center justify-center hover-lift shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2`}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group relative w-12 h-12 bg-gradient-to-br ${social.color} rounded-xl flex items-center justify-center hover-lift shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2`}
                 >
-                  <i className={`fab fa-${social.name} text-xl text-white group-hover:scale-125 transition-transform duration-300`}></i>
+                  <i className={`fab fa-${social.name} text-lg text-white group-hover:scale-125 transition-transform duration-300`}></i>
                   <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </a>
               ))}
