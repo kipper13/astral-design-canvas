@@ -1,11 +1,46 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ArrowDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
+// Using relative import to fix path resolution issue
+import { getVideoSources, shouldUseVideoBackground } from "../utils/video-assets";
+
+// Configuration for background type
+interface HeroConfig {
+  backgroundType: 'gradient' | 'video' | 'image';
+  videoAsset?: string; // Key from video assets
+  backgroundImage?: string;
+  videoOverlay?: 'none' | 'light' | 'dark' | 'gradient';
+  videoOverlayOpacity?: number;
+}
+
+// 🎬 VIDEO BACKGROUND ENABLED! 🎬
+// Make sure your video files are in public/videos/
+const heroConfig: HeroConfig = {
+  backgroundType: 'video', // ✅ Video background enabled!
+  videoAsset: 'hero', // Uses the 'hero' video from video-assets.ts
+  backgroundImage: '/hero-bg.jpg', // Static background image fallback
+  videoOverlay: 'gradient', // Overlay for better text readability
+  videoOverlayOpacity: 0.3 // Adjust opacity (0-1)
+};
+
+// Parallax settings
+const parallaxConfig = {
+  enabled: true,
+  forceEnable: true, // Override reduced motion for testing - set to false for production
+  videoSpeed: 0.5, // Video parallax speed (0.5 = half speed)
+  contentSpeed: 0.2, // Content parallax speed
+  fadeContent: true // Fade content on scroll
+};
 
 export const HeroSection = () => {
   const [typingText, setTypingText] = useState("");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const words = ["landing pages", "funnels", "experiences", "interfaces"];
 
   useEffect(() => {
@@ -64,6 +99,132 @@ export const HeroSection = () => {
     return () => clearInterval(particleInterval);
   }, []);
 
+  // Parallax scroll effect
+  useEffect(() => {
+    if (!parallaxConfig.enabled) {
+      console.log('⚠️ Parallax disabled in config');
+      return;
+    }
+
+    // Check reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    console.log('🎬 Parallax - Reduced motion:', prefersReducedMotion);
+    console.log('🎬 Parallax - Force enable:', parallaxConfig.forceEnable);
+    
+    if (prefersReducedMotion && !parallaxConfig.forceEnable) {
+      console.log('⚠️ Parallax disabled due to reduced motion preference');
+      return;
+    }
+
+    if (parallaxConfig.forceEnable) {
+      console.log('🚀 Parallax force enabled - overriding reduced motion');
+    }
+
+    console.log('✅ Parallax effect initializing...');
+
+    const handleScroll = () => {
+      const scrollPosition = window.pageYOffset;
+      setScrollY(scrollPosition);
+      
+      if (heroRef.current && (videoRef.current || contentRef.current)) {
+        const heroHeight = heroRef.current.offsetHeight;
+        const scrollProgress = Math.min(scrollPosition / heroHeight, 1);
+        
+        // Apply parallax transforms
+        if (videoRef.current) {
+          // Video moves slower for parallax effect
+          const videoTransform = scrollPosition * parallaxConfig.videoSpeed;
+          videoRef.current.style.transform = `translate3d(0, ${videoTransform}px, 0) scale(1.1)`;
+        }
+        
+        if (contentRef.current) {
+          // Content moves for depth effect
+          const contentTransform = scrollPosition * parallaxConfig.contentSpeed;
+          const opacity = parallaxConfig.fadeContent ? Math.max(1 - scrollProgress * 1.5, 0) : 1;
+          contentRef.current.style.transform = `translate3d(0, ${contentTransform}px, 0)`;
+          contentRef.current.style.opacity = opacity.toString();
+        }
+      }
+    };
+
+    // Add scroll listener with throttling for performance
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    
+    // Initial call
+    handleScroll();
+    
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+      console.log('🧹 Parallax effect cleanup');
+    };
+  }, []);
+
+  const renderBackground = () => {
+    switch (heroConfig.backgroundType) {
+      case 'video':
+        const videoAsset = getVideoSources(heroConfig.videoAsset!);
+        
+        if (!videoAsset) {
+          return (
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20">
+              <div className="particles"></div>
+            </div>
+          );
+        }
+        
+        return (
+          <>
+            {/* Video Background */}
+            <video
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover parallax-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              style={{ zIndex: 1, transformOrigin: 'center center' }}
+            >
+              <source src={videoAsset.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            {/* Dark overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/30" style={{ zIndex: 2 }}></div>
+          </>
+        );
+      case 'image':
+        return (
+          <>
+            <OptimizedImage
+              src={heroConfig.backgroundImage!}
+              alt="Hero background"
+              className="absolute inset-0 w-full h-full object-cover"
+              priority={true}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20" />
+          </>
+        );
+      case 'gradient':
+      default:
+        return (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20">
+            <div className="particles"></div>
+          </div>
+        );
+    }
+  };
+
   const scrollToServices = () => {
     const servicesSection = document.getElementById("services");
     if (servicesSection) {
@@ -72,110 +233,179 @@ export const HeroSection = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20">
-        <div className="particles"></div>
-      </div>
+    <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Dynamic Background */}
+      {renderBackground()}
       
       {/* Background Shapes */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/20 rounded-full animate-float blur-xl"></div>
-      <div className="absolute bottom-32 right-20 w-48 h-48 bg-accent/20 rounded-full animate-float blur-xl" style={{ animationDelay: "2s" }}></div>
-      <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-primary/30 rounded-full animate-float blur-xl" style={{ animationDelay: "4s" }}></div>
+      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/20 rounded-full animate-float blur-xl" style={{ zIndex: 3 }}></div>
+      <div className="absolute bottom-32 right-20 w-48 h-48 bg-accent/20 rounded-full animate-float blur-xl" style={{ animationDelay: "2s", zIndex: 3 }}></div>
+      <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-primary/30 rounded-full animate-float blur-xl" style={{ animationDelay: "4s", zIndex: 3 }}></div>
 
-      <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="flex flex-col items-center text-center space-y-8 max-w-4xl mx-auto">
-          {/* Profile Photo Section - Positioned at the top */}
-          <div className="relative mb-4">
-            {/* Profile Photo with Premium Hover Effect and Float Animation */}
-            <div className="profile-container w-64 h-64 md:w-72 md:h-72 relative group cursor-pointer animate-float">
-              <div className="profile-card w-full h-full bg-gradient-to-br from-card to-card/80 border border-border rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_25px_50px_-12px_hsl(var(--primary)/0.5)] group-hover:border-primary/50 group-hover:-translate-y-2">
-                <div className="relative w-full h-full">
-                  <img 
-                    src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png" 
-                    alt="Christian Kevin Flores - Professional Designer" 
-                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-                    onError={(e) => {
-                      console.log('Image failed to load');
-                      e.currentTarget.src = '/placeholder.svg';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-all duration-500 group-hover:from-primary/40 group-hover:to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform transition-all duration-500 group-hover:translate-y-1">
-                    <h3 className="text-lg font-poppins font-semibold text-white transition-all duration-500 group-hover:text-primary-foreground group-hover:drop-shadow-lg">Christian Kevin Flores</h3>
-                    <p className="text-sm text-white/80 transition-all duration-500 group-hover:text-primary-foreground/90">Creative Designer</p>
+      <div ref={contentRef} className="container mx-auto px-4 py-32 relative parallax-content" style={{ zIndex: 10 }}>
+        <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto gap-12">
+          
+          {/* Left Side - Profile & Visual Elements */}
+          <div className="flex-1 flex flex-col items-center lg:items-start space-y-8">
+            {/* Status Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm font-medium">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              Available for new projects
+            </div>
+            
+            {/* Profile Photo with Enhanced Design */}
+            <div className="relative">
+              <div className="profile-container w-80 h-80 md:w-96 md:h-96 relative group cursor-pointer">
+                {/* Animated Border Ring */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-accent to-primary animate-pulse opacity-75 blur-lg"></div>
+                
+                <div className="profile-card relative w-full h-full bg-gradient-to-br from-card to-card/80 border-2 border-primary/30 rounded-3xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_40px_80px_-12px_hsl(var(--primary)/0.4)] group-hover:border-primary/60 group-hover:-translate-y-4">
+                  <div className="relative w-full h-full">
+                    <OptimizedImage
+                      src="/lovable-uploads/d3f261eb-d56d-4140-9b02-ca942ef0049e.png"
+                      alt="Christian Kevin Flores - Creative Designer"
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      width={384}
+                      height={384}
+                      priority={true}
+                      placeholder="/placeholder.svg"
+                    />
+                    
+                    {/* Enhanced Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-all duration-700 group-hover:from-primary/60 group-hover:to-transparent" />
+                    
+                    {/* Profile Info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-8 text-center transform transition-all duration-700 group-hover:translate-y-2">
+                      <h3 className="text-2xl font-poppins font-bold text-white mb-2 transition-all duration-700 group-hover:text-primary-foreground group-hover:drop-shadow-lg">
+                        Christian Kevin Flores
+                      </h3>
+                      <p className="text-lg text-white/90 font-medium transition-all duration-700 group-hover:text-primary-foreground/95">
+                        Creative Designer & Developer
+                      </p>
+                      <div className="flex justify-center gap-3 mt-4 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                        <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                        <div className="w-3 h-3 bg-accent rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                        <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      </div>
+                    </div>
+                    
+                    {/* Hover Effect Overlay */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700 bg-gradient-to-br from-primary/40 via-transparent to-accent/40"></div>
                   </div>
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-primary/30 via-transparent to-accent/30"></div>
+                </div>
+              </div>
+              
+              {/* Enhanced Floating Elements */}
+              <div className="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-primary to-accent rounded-2xl shadow-xl animate-float hover-glow backdrop-blur-sm border border-white/10">
+                <div className="h-full flex items-center justify-center">
+                  <i className="fas fa-palette text-2xl text-white"></i>
+                </div>
+              </div>
+              
+              <div className="absolute -bottom-12 -left-12 w-20 h-20 bg-gradient-to-br from-accent to-primary rounded-2xl shadow-xl animate-float hover-glow backdrop-blur-sm border border-white/10" style={{ animationDelay: "1s" }}>
+                <div className="h-full flex items-center justify-center">
+                  <i className="fas fa-code text-xl text-white"></i>
+                </div>
+              </div>
+              
+              <div className="absolute top-1/2 -right-16 w-16 h-16 bg-gradient-to-br from-primary/80 to-accent/80 rounded-xl shadow-lg animate-float hover-glow backdrop-blur-sm border border-white/10" style={{ animationDelay: "2s" }}>
+                <div className="h-full flex items-center justify-center">
+                  <i className="fas fa-rocket text-lg text-white"></i>
                 </div>
               </div>
             </div>
-
-            {/* Floating Elements around the photo */}
-            <div className="absolute -top-8 -right-8 w-20 h-20 bg-card border border-border rounded-xl shadow-lg animate-float hover-glow">
-              <div className="h-full flex items-center justify-center">
-                <i className="fas fa-tablet-alt text-xl text-primary"></i>
-              </div>
-            </div>
-            
-            <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-card border border-border rounded-xl shadow-lg animate-float hover-glow" style={{ animationDelay: "1s" }}>
-              <div className="h-full flex items-center justify-center">
-                <i className="fas fa-mobile-alt text-lg text-primary"></i>
-              </div>
-            </div>
           </div>
-
-          {/* Text Content - Positioned below the photo */}
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h1 className="hero-title text-4xl md:text-6xl lg:text-7xl font-poppins font-bold text-foreground">
-                Creative
-                <span className="block gradient-text">Designer</span>
+          
+          {/* Right Side - Hero Content */}
+          <div className="flex-1 space-y-8 text-center lg:text-left py-8">
+            {/* Main Heading */}
+            <div className="space-y-6 overflow-visible hero-title-container">
+              <h1 className="text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-poppins font-black hero-title-xl">
+                <span className="block text-foreground mb-2 md:mb-3">Creative</span>
+                <span className="block gradient-text animate-pulse mb-4 md:mb-6">Designer</span>
+                <span className="block text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-muted-foreground font-normal leading-relaxed">
+                  & Developer
+                </span>
               </h1>
               
-              <div className="text-xl md:text-2xl text-muted-foreground font-montserrat">
-                I design{" "}
-                <span className="text-primary font-semibold border-r-2 border-primary animate-pulse">
+              {/* Dynamic Typing Text */}
+              <div className="text-xl md:text-2xl lg:text-3xl text-muted-foreground font-montserrat">
+                <span className="text-foreground">I craft </span>
+                <span className="text-primary font-bold border-r-4 border-primary animate-pulse bg-primary/10 px-2 py-1 rounded">
                   {typingText}
                 </span>
               </div>
             </div>
 
-            <p className="hero-subtitle text-lg md:text-xl text-muted-foreground font-montserrat max-w-2xl mx-auto">
-              Crafting beautiful, conversion-focused designs that blend creativity with strategy. 
-              Specialized in landing pages, funnels, and user experiences that drive results.
-            </p>
+            {/* Enhanced Description */}
+            <div className="space-y-4 max-w-2xl lg:max-w-none">
+              <p className="text-lg md:text-xl text-muted-foreground font-montserrat leading-relaxed">
+                Transforming ideas into <span className="text-primary font-semibold">pixel-perfect experiences</span> that captivate users and drive business growth.
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground/80 font-montserrat leading-relaxed">
+                Specialized in creating conversion-optimized landing pages, engaging user interfaces, and comprehensive brand experiences that tell your story.
+              </p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 py-6">
+              <div className="text-center lg:text-left">
+                <div className="text-3xl md:text-4xl font-bold text-primary">50+</div>
+                <div className="text-sm text-muted-foreground">Projects Completed</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-3xl md:text-4xl font-bold text-primary">5+</div>
+                <div className="text-sm text-muted-foreground">Years Experience</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-3xl md:text-4xl font-bold text-primary">98%</div>
+                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+              </div>
+            </div>
+
+            {/* Enhanced CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
               <Button 
                 size="lg" 
-                className="hover-lift font-montserrat font-semibold px-8 py-3 text-lg"
+                className="group relative overflow-hidden bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary font-montserrat font-bold px-10 py-4 text-lg rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                 onClick={scrollToServices}
               >
-                View My Work
-                <ArrowDown className="ml-2 h-5 w-5" />
+                <span className="relative z-10 flex items-center">
+                  View My Work
+                  <ArrowDown className="ml-2 h-5 w-5 group-hover:translate-y-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               </Button>
               
               <a href="/resume">
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="hover-lift font-montserrat font-semibold px-8 py-3 text-lg border-2 hover:bg-primary hover:text-primary-foreground"
+                  className="group relative overflow-hidden font-montserrat font-bold px-10 py-4 text-lg border-2 border-primary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground"
                 >
-                  <Download className="mr-2 h-5 w-5" />
-                  Download Resume
+                  <span className="relative z-10 flex items-center">
+                    <Download className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                    Download Resume
+                  </span>
                 </Button>
               </a>
             </div>
 
-            {/* Social Links */}
-            <div className="flex gap-6 justify-center pt-4">
-              {["dribbble", "behance", "instagram", "linkedin"].map((social) => (
+            {/* Enhanced Social Links */}
+            <div className="flex gap-4 justify-center lg:justify-start pt-6">
+              {[
+                { name: "dribbble", color: "from-pink-500 to-red-500" },
+                { name: "behance", color: "from-blue-600 to-purple-600" },
+                { name: "instagram", color: "from-purple-500 to-pink-500" },
+                { name: "linkedin", color: "from-blue-600 to-blue-800" }
+              ].map((social) => (
                 <a
-                  key={social}
+                  key={social.name}
                   href="#"
-                  className="w-12 h-12 bg-card border border-border rounded-full flex items-center justify-center hover-lift hover-glow transition-all"
+                  className={`group relative w-14 h-14 bg-gradient-to-br ${social.color} rounded-xl flex items-center justify-center hover-lift shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2`}
                 >
-                  <i className={`fab fa-${social} text-xl text-primary`}></i>
+                  <i className={`fab fa-${social.name} text-xl text-white group-hover:scale-125 transition-transform duration-300`}></i>
+                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </a>
               ))}
             </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Navigation = () => {
@@ -20,7 +20,7 @@ export const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "services", "portfolio", "skills", "process", "testimonials", "contact"];
+      const sections = ["hero", "services", "portfolio", "skills", "process", "contact"];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -57,7 +57,6 @@ export const Navigation = () => {
     { id: "portfolio", label: "Portfolio" },
     { id: "skills", label: "Skills" },
     { id: "process", label: "Process" },
-    { id: "testimonials", label: "Testimonials" },
     { id: "contact", label: "Contact" },
   ];
 
@@ -67,11 +66,11 @@ export const Navigation = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="text-2xl font-poppins font-bold gradient-text">
-            Portfolio
+            Kev'nCreates
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -86,24 +85,35 @@ export const Navigation = () => {
                 )}
               </button>
             ))}
+            
+            {/* Magic Theme Toggle */}
+            <div className="magic-toggle-container ml-4">
+              <input
+                type="checkbox"
+                checked={isDark}
+                onChange={toggleTheme}
+                className="magic-toggle"
+                aria-label="Toggle theme"
+              />
+            </div>
           </div>
 
-          {/* Theme Toggle & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="hover-lift"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
+          {/* Mobile Menu */}
+          <div className="flex items-center space-x-4 md:hidden">
+            <div className="magic-toggle-container">
+              <input
+                type="checkbox"
+                checked={isDark}
+                onChange={toggleTheme}
+                className="magic-toggle"
+                aria-label="Toggle theme"
+              />
+            </div>
 
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>

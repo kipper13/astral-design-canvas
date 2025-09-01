@@ -1,50 +1,50 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Portfolio Design System - Modern animated personal portfolio */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
-@import '@fortawesome/fontawesome-free/css/all.min.css';
-
 @layer base {
   :root {
-    /* Light Mode Portfolio Colors */
-    --background: 240 6% 94%; /* #f0f0f0 */
-    --foreground: 222 84% 5%;
+    /* Light Mode Portfolio Colors - Vibrant & Dynamic */
+    --background: 250 20% 96%; /* #f5f7fc - Crisp, vibrant light background */
+    --foreground: 229 35% 18%; /* #1c2956 - Strong, vibrant dark blue */
     
-    --card: 0 0% 100%; /* #ffffff */
-    --card-foreground: 222 84% 5%;
+    --card: 0 0% 100%; /* #ffffff - Pure white for maximum contrast */
+    --card-foreground: 229 35% 18%;
     
-    --primary: 229 62% 62%; /* #5e72e4 */
+    --primary: 229 70% 55%; /* #4f63d2 - More saturated, vibrant blue */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 240 6% 94%;
-    --secondary-foreground: 222 84% 5%;
+    --secondary: 250 25% 92%; /* #e8ecf6 - Vibrant tinted background */
+    --secondary-foreground: 229 35% 18%;
     
-    --muted: 240 4% 88%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 240 20% 85%; /* #d6dae6 - More saturated muted areas */
+    --muted-foreground: 229 25% 35%; /* #4a5980 - Stronger muted text */
     
-    --accent: 229 62% 62%;
+    --accent: 280 95% 60%; /* #d624e8 - Highly saturated vibrant purple */
     --accent-foreground: 0 0% 100%;
     
-    --border: 240 6% 88%;
-    --input: 240 6% 88%;
-    --ring: 229 62% 62%;
+    --border: 240 25% 82%; /* #cdd3e2 - Vibrant borders with strong blue tint */
+    --input: 250 20% 92%; /* #ebeff8 - Vibrant input background */
+    --ring: 229 70% 55%; /* Match vibrant primary for focus rings */
     
-    /* Portfolio specific gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(229 62% 62%), hsl(280 100% 70%));
-    --gradient-card: linear-gradient(135deg, hsl(229 62% 62% / 0.1), hsl(280 100% 70% / 0.1));
+    /* Vibrant Hero Section Matched Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(229 70% 55%), hsl(280 95% 60%));
+    --gradient-card: linear-gradient(135deg, hsl(229 70% 55% / 0.1), hsl(280 95% 60% / 0.1));
     
     /* Animation variables */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
-    /* Shadows */
-    --shadow-glow: 0 0 40px hsl(229 62% 62% / 0.3);
-    --shadow-card: 0 10px 30px -10px hsl(229 62% 62% / 0.2);
-    --shadow-hover: 0 20px 40px -10px hsl(229 62% 62% / 0.4);
+    /* Vibrant shadows for more dynamic appearance */
+    --shadow-glow: 0 0 40px hsl(229 70% 55% / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(229 70% 55% / 0.2);
+    --shadow-hover: 0 20px 40px -10px hsl(229 70% 55% / 0.4);
     
     --radius: 0.75rem;
 
@@ -198,6 +198,115 @@
   .flip-card-inner {
     position: relative;
     width: 100%;
+  }
+  
+  /* Performance Optimizations */
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+  
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .smooth-transition {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Parallax Performance Optimizations */
+  .parallax-video {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .parallax-content {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Large Typography Fixes */
+  .hero-title-xl {
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+  
+  .hero-title-container {
+    overflow: visible;
+    min-height: fit-content;
+  }
+  
+  @media (min-width: 1280px) {
+    .hero-title-xl {
+      line-height: 0.85;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-glow,
+    .animate-typing,
+    .animate-cube,
+    .particle {
+      animation: none;
+    }
+    
+    .hover-lift {
+      transition: none;
+    }
+  }
+  
+  /* Loading states */
+  .skeleton {
+    background: linear-gradient(110deg, hsl(var(--muted)) 8%, hsl(var(--muted-foreground) / 0.1) 18%, hsl(var(--muted)) 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  
+  .loading-dots {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .loading-dots div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: hsl(var(--primary));
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  
+  .loading-dots div:nth-child(1) {
+    left: 8px;
+    animation: loadingDots1 0.6s infinite;
+  }
+  
+  .loading-dots div:nth-child(2) {
+    left: 8px;
+    animation: loadingDots2 0.6s infinite;
+  }
+  
+  .loading-dots div:nth-child(3) {
+    left: 32px;
+    animation: loadingDots2 0.6s infinite;
+  }
+  
+  .loading-dots div:nth-child(4) {
+    left: 56px;
+    animation: loadingDots3 0.6s infinite;
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
@@ -332,6 +441,38 @@
   100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
 
+/* New Performance Animation Keyframes */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes loadingDots1 {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+@keyframes loadingDots3 {
+  0% { transform: scale(1); }
+  100% { transform: scale(0); }
+}
+
+@keyframes loadingDots2 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(24px, 0); }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
 /* Responsive Typography */
 @media (max-width: 768px) {
   .hero-title {
@@ -341,4 +482,65 @@
   .hero-subtitle {
     font-size: 1.125rem !important;
   }
+}
+
+/* Magic Theme Toggle */
+.magic-toggle {
+  --size: 2rem;
+  
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  
+  width: var(--size);
+  height: var(--size);
+  box-shadow: inset calc(var(--size) * 0.33) calc(var(--size) * -0.25) 0;
+  border-radius: 999px;
+  color: hsl(240, 100%, 95%);
+  border: none;
+  background: transparent;
+  
+  transition: all 500ms ease;
+}
+
+.magic-toggle:checked {
+  --ray-size: calc(var(--size) * -0.4);
+  --offset-orthogonal: calc(var(--size) * 0.65);
+  --offset-diagonal: calc(var(--size) * 0.45);
+
+  transform: scale(0.75);
+  color: hsl(40, 100%, 50%);
+  box-shadow: 
+    inset 0 0 0 var(--size),
+    calc(var(--offset-orthogonal) * -1) 0 0 var(--ray-size),
+    var(--offset-orthogonal) 0 0 var(--ray-size),
+    0 calc(var(--offset-orthogonal) * -1) 0 var(--ray-size),
+    0 var(--offset-orthogonal) 0 var(--ray-size),
+    calc(var(--offset-diagonal) * -1) calc(var(--offset-diagonal) * -1) 0 var(--ray-size),
+    var(--offset-diagonal) var(--offset-diagonal) 0 var(--ray-size),
+    calc(var(--offset-diagonal) * -1) var(--offset-diagonal) 0 var(--ray-size),
+    var(--offset-diagonal) calc(var(--offset-diagonal) * -1) 0 var(--ray-size);
+}
+
+.magic-toggle:hover {
+  transform: scale(1.1);
+}
+
+.magic-toggle:checked:hover {
+  transform: scale(0.85);
+}
+
+/* Magic toggle container for proper positioning */
+.magic-toggle-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 300ms ease;
+}
+
+.magic-toggle-container:hover {
+  background: hsl(var(--accent) / 0.1);
 }
