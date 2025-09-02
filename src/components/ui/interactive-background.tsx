@@ -252,18 +252,22 @@ export const SimpleInteractiveBackground = () => {
     };
     resizeCanvas();
 
-    // Initialize particles
+    // Initialize particles with vibrant colors for light mode
     const initParticles = () => {
       const particles = [];
       for (let i = 0; i < 50; i++) {
+        // More vibrant color range for light mode
+        const vibrantHues = [229, 280, 11]; // Blue, purple, orange
+        const selectedHue = vibrantHues[Math.floor(Math.random() * vibrantHues.length)];
+        
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * 0.5,
           vy: (Math.random() - 0.5) * 0.5,
           size: Math.random() * 3 + 1,
-          opacity: Math.random() * 0.5 + 0.1,
-          hue: Math.random() * 60 + 200 // Blue to purple range
+          opacity: Math.random() * 0.6 + 0.2, // Increased opacity for more visibility
+          hue: selectedHue + (Math.random() * 20 - 10) // Add slight variation
         });
       }
       particlesRef.current = particles;
@@ -305,11 +309,17 @@ export const SimpleInteractiveBackground = () => {
         particle.vx *= 0.99;
         particle.vy *= 0.99;
 
-        // Draw particle
+        // Draw particle with vibrant colors
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${particle.hue}, 70%, 60%, ${particle.opacity})`;
+        ctx.fillStyle = `hsla(${particle.hue}, 85%, 65%, ${particle.opacity})`; // Increased saturation and lightness
         ctx.fill();
+        
+        // Add glow effect for more vibrancy
+        ctx.shadowColor = `hsla(${particle.hue}, 85%, 65%, 0.8)`;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0; // Reset shadow
 
         // Draw connections
         particlesRef.current.forEach(otherParticle => {
@@ -321,7 +331,7 @@ export const SimpleInteractiveBackground = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `hsla(${particle.hue}, 70%, 60%, ${0.1 * (1 - distance2 / 80)})`;
+            ctx.strokeStyle = `hsla(${particle.hue}, 85%, 65%, ${0.2 * (1 - distance2 / 80)})`; // More vibrant connections
             ctx.lineWidth = 1;
             ctx.stroke();
           }

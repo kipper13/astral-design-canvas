@@ -142,15 +142,21 @@ export const ServicesSection = () => {
       <div className="absolute top-20 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl morphing-shape"></div>
       <div className="absolute bottom-20 left-10 w-60 h-60 bg-accent/10 rounded-full blur-3xl morphing-shape"></div>
       
-      {/* Floating Particles */}
+      {/* Floating Particles with vibrant colors for light mode */}
       {[...Array(12)].map((_, i) => (
         <div
           key={i}
-          className={`floating-particle absolute w-2 h-2 bg-primary/20 rounded-full`}
+          className={`floating-particle absolute w-2 h-2 rounded-full`}
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            animationDelay: `${i * 0.5}s`
+            animationDelay: `${i * 0.5}s`,
+            background: i % 3 === 0 
+              ? 'linear-gradient(45deg, hsl(229, 85%, 60%), hsl(280, 95%, 65%))' 
+              : i % 3 === 1 
+              ? 'linear-gradient(45deg, hsl(11, 90%, 65%), hsl(280, 95%, 65%))'
+              : 'linear-gradient(45deg, hsl(229, 85%, 60%), hsl(11, 90%, 65%))',
+            boxShadow: '0 0 15px rgba(79, 99, 210, 0.6)'
           }}
         />
       ))}

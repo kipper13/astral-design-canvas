@@ -1,6 +1,6 @@
 
 import { useEffect, useState, useRef } from "react";
-import { ArrowDown, Github } from "lucide-react";
+import { ArrowDown, Github, Palette, Code, Rocket, Ruler, MousePointer, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // Using relative import to fix path resolution issue
 import { getVideoSources, shouldUseVideoBackground } from "../utils/video-assets";
@@ -319,19 +319,32 @@ export const HeroSection = () => {
               {/* Enhanced Floating Elements */}
               <div className="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-primary to-accent rounded-2xl shadow-xl animate-float hover-glow backdrop-blur-sm border border-white/10">
                 <div className="h-full flex items-center justify-center">
-                  <i className="fas fa-palette text-2xl text-white"></i>
+                  <Palette className="w-8 h-8 text-white drop-shadow-lg" />
                 </div>
               </div>
               
               <div className="absolute -bottom-12 -left-12 w-20 h-20 bg-gradient-to-br from-accent to-primary rounded-2xl shadow-xl animate-float hover-glow backdrop-blur-sm border border-white/10" style={{ animationDelay: "1s" }}>
                 <div className="h-full flex items-center justify-center">
-                  <i className="fas fa-code text-xl text-white"></i>
+                  <Code className="w-6 h-6 text-white drop-shadow-lg" />
                 </div>
               </div>
               
               <div className="absolute top-1/2 -right-16 w-16 h-16 bg-gradient-to-br from-primary/80 to-accent/80 rounded-xl shadow-lg animate-float hover-glow backdrop-blur-sm border border-white/10" style={{ animationDelay: "2s" }}>
                 <div className="h-full flex items-center justify-center">
-                  <i className="fas fa-rocket text-lg text-white"></i>
+                  <Rocket className="w-5 h-5 text-white drop-shadow-lg" />
+                </div>
+              </div>
+
+              {/* Additional Background Icons */}
+              <div className="absolute top-1/4 -left-20 w-14 h-14 bg-gradient-to-br from-blue-500/60 to-purple-500/60 rounded-lg shadow-lg animate-float backdrop-blur-sm border border-white/10" style={{ animationDelay: "3s" }}>
+                <div className="h-full flex items-center justify-center">
+                  <Ruler className="w-4 h-4 text-white drop-shadow-lg" />
+                </div>
+              </div>
+              
+              <div className="absolute bottom-1/4 -right-20 w-12 h-12 bg-gradient-to-br from-green-500/60 to-blue-500/60 rounded-lg shadow-lg animate-float backdrop-blur-sm border border-white/10" style={{ animationDelay: "4s" }}>
+                <div className="h-full flex items-center justify-center">
+                  <MousePointer className="w-4 h-4 text-white drop-shadow-lg" />
                 </div>
               </div>
             </div>
@@ -394,14 +407,14 @@ export const HeroSection = () => {
                 rel="noopener noreferrer"
                 className="group relative w-12 h-12 bg-gradient-to-br from-gray-700 to-black rounded-xl flex items-center justify-center hover-lift shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                <Github className="text-lg text-white group-hover:scale-125 transition-transform duration-300" />
+                <Github className="w-5 h-5 text-white group-hover:scale-125 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
               {[
-                { name: "dribbble", color: "from-pink-500 to-red-500", href: "#" },
-                { name: "behance", color: "from-blue-600 to-purple-600", href: "#" },
-                { name: "instagram", color: "from-purple-500 to-pink-500", href: "#" },
-                { name: "linkedin", color: "from-blue-600 to-blue-800", href: "https://www.linkedin.com/in/kevinflores3/" }
+                { name: "dribbble", color: "from-pink-500 to-red-500", href: "#", icon: "fab fa-dribbble" },
+                { name: "behance", color: "from-blue-600 to-purple-600", href: "#", icon: "fab fa-behance" },
+                { name: "instagram", color: "from-purple-500 to-pink-500", href: "#", icon: "fab fa-instagram" },
+                { name: "linkedin", color: "from-blue-600 to-blue-800", href: "https://www.linkedin.com/in/kevinflores3/", icon: "fab fa-linkedin" }
               ].map((social) => (
                 <a
                   key={social.name}
@@ -410,7 +423,9 @@ export const HeroSection = () => {
                   rel="noopener noreferrer"
                   className={`group relative w-12 h-12 bg-gradient-to-br ${social.color} rounded-xl flex items-center justify-center hover-lift shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2`}
                 >
-                  <i className={`fab fa-${social.name} text-lg text-white group-hover:scale-125 transition-transform duration-300`}></i>
+                  <i className={`${social.icon} text-lg text-white group-hover:scale-125 transition-transform duration-300`}></i>
+                  {/* Fallback if Font Awesome doesn't load */}
+                  <ExternalLink className="w-4 h-4 text-white group-hover:scale-125 transition-transform duration-300 hidden" />
                   <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </a>
               ))}

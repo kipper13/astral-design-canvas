@@ -136,7 +136,7 @@ export const ContactSection = () => {
               </div>
             )}
 
-            <div className="mb-8">
+            <div className="mb-8 relative">
               <h3 className="text-2xl font-poppins font-bold text-foreground mb-2">
                 Send Me a Message
               </h3>

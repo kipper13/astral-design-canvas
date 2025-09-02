@@ -156,7 +156,16 @@ export const Navigation = () => {
           >
             <span 
               ref={logoTextRef}
-              className="text-2xl font-poppins font-bold animated-gradient-text"
+              className="text-2xl font-poppins font-bold text-white relative"
+              style={{
+                textShadow: '0 0 10px rgba(79, 99, 210, 0.5)',
+                backgroundImage: 'linear-gradient(45deg, hsl(229, 75%, 50%), hsl(280, 90%, 55%), hsl(11, 90%, 65%), hsl(229, 75%, 50%))',
+                backgroundSize: '400% 400%',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                animation: 'subtleShimmerGradient 8s ease-in-out infinite'
+              }}
             >
               Kev'nCreates
             </span>
@@ -168,8 +177,8 @@ export const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`glass-nav-item relative font-montserrat font-light transition-colors hover:text-primary ${
-                  activeSection === item.id ? "text-primary" : "text-foreground/80"
+                className={`glass-nav-item relative font-montserrat font-thin transition-all duration-300 ease-in-out ${
+                  activeSection === item.id ? "text-blue-400" : "glass-nav-item"
                 }`}
               >
                 {item.label}
@@ -207,7 +216,7 @@ export const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="glass-nav-item"
+              className="glass-nav-item text-white hover:text-blue-400 transition-all duration-300"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -222,8 +231,8 @@ export const Navigation = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`glass-nav-item text-left font-montserrat font-light transition-colors hover:text-primary ${
-                    activeSection === item.id ? "text-primary" : "text-foreground/80"
+                  className={`glass-nav-item text-left font-montserrat font-thin transition-all duration-300 ease-in-out ${
+                    activeSection === item.id ? "text-blue-400" : "glass-nav-item"
                   }`}
                 >
                   {item.label}
