@@ -41,7 +41,7 @@ export const InteractiveProjectCard = ({
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const magneticRef = useMagneticHover(0.15);
+  const magneticRef = useMagneticHover<HTMLDivElement>(0.15);
 
   // 3D card effect on mouse move
   useEffect(() => {

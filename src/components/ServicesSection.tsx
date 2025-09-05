@@ -97,7 +97,6 @@ const services = [
 ];
 
 export const ServicesSection = () => {
-  const [activeService, setActiveService] = useState<number | null>(null);
   
   useEffect(() => {
     // Create floating particles animation
@@ -139,14 +138,14 @@ export const ServicesSection = () => {
       delay={0.2}
     >
       {/* Enhanced Background Elements with Floating Particles */}
-      <div className="absolute top-20 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl morphing-shape"></div>
-      <div className="absolute bottom-20 left-10 w-60 h-60 bg-accent/10 rounded-full blur-3xl morphing-shape"></div>
+      <div className="absolute top-20 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl morphing-shape pointer-events-none"></div>
+      <div className="absolute bottom-20 left-10 w-60 h-60 bg-accent/10 rounded-full blur-3xl morphing-shape pointer-events-none"></div>
       
       {/* Floating Particles with vibrant colors for light mode */}
       {[...Array(12)].map((_, i) => (
         <div
           key={i}
-          className={`floating-particle absolute w-2 h-2 rounded-full`}
+          className={`floating-particle absolute w-2 h-2 rounded-full pointer-events-none`}
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
@@ -202,8 +201,6 @@ export const ServicesSection = () => {
               key={service.title} 
               service={service} 
               index={index}
-              isActive={activeService === index}
-              setActive={setActiveService}
             />
           ))}
         </StaggeredContainer>
@@ -258,13 +255,11 @@ const TabButton = ({ label, active = false }: { label: string; active?: boolean 
 );
 
 // Enhanced Service Card Component with all features
-const ServiceCard = ({ service, index, isActive, setActive }: { 
+const ServiceCard = ({ service, index }: { 
   service: any; 
   index: number; 
-  isActive: boolean;
-  setActive: (index: number | null) => void;
 }) => {
-  const magneticRef = useMagneticHover(0.2) as React.RefObject<HTMLDivElement>;
+  const magneticRef = useMagneticHover<HTMLDivElement>(0.2);
   const iconRef = React.useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -290,15 +285,14 @@ const ServiceCard = ({ service, index, isActive, setActive }: {
   return (
     <div
       ref={magneticRef}
-      className="service-card flip-card h-96"
+      className="service-card flip-card h-96 hover-lift hover-glow"
       data-cursor="hover"
       data-cursor-text="View Details"
-      onMouseEnter={() => setActive(index)}
-      onMouseLeave={() => setActive(null)}
+      style={{ isolation: 'isolate' }}
     >
       <div className="flip-card-inner">
         {/* Enhanced Front Side */}
-        <div className="flip-card-front bg-card border border-border rounded-2xl p-6 hover-lift hover-glow relative overflow-hidden">
+        <div className="flip-card-front bg-card border border-border rounded-2xl p-6 relative overflow-hidden">
           {/* Animated Background Gradient */}
           <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-5 transition-opacity duration-300 hover:opacity-10`} />
           

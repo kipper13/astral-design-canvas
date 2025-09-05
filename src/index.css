@@ -1719,6 +1719,8 @@
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    will-change: transform;
+    isolation: isolate;
   }
   
   .flip-card:hover .flip-card-inner {
@@ -1731,10 +1733,22 @@
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    transform: translateZ(0);
+    overflow: hidden;
+  }
+  
+  .flip-card-front {
+    z-index: 2;
+    transform: rotateY(0deg) translateZ(0);
   }
   
   .flip-card-back {
-    transform: rotateY(180deg);
+    z-index: 1;
+    transform: rotateY(180deg) translateZ(0);
+  }
+
+  .floating-particle {
+    pointer-events: none;
   }
 }
 
