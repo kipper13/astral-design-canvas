@@ -1245,6 +1245,48 @@
   21.2%, 21.6%, 23.6%, 25.6%, 27.2%, 29.6%, 31.6%, 33.6%, 35.6%, 37.6%, 77.6%, 78%, 80%, 82%, 84%, 86%, 88%, 90%, 92%, 94% { transform: rotate(13deg) translateX(0px) translateY(0px); }
 }
 
+/* Adjusted flip card styles to ensure back content visibility */
+.flip-card {
+    background-color: transparent;
+    perspective: 1000px;
+    height: 400px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    overflow: visible; /* Ensure content is not clipped */
+}
+
+.flip-card-front {
+    z-index: 2;
+    transform: rotateY(0deg) translateZ(0);
+}
+
+.flip-card-back {
+    z-index: 1;
+    transform: rotateY(180deg) translateZ(0);
+    visibility: visible; /* Ensure back face is visible */
+}
+
 /* Gradient shimmer animation for logo */
 @keyframes subtleShimmerGradient {
   0%, 100% { background-position: 0% 50%; }
@@ -1606,121 +1648,11 @@
   .flip-card-inner {
     position: relative;
     width: 100%;
-  }
-  
-  /* Performance Optimizations */
-  .animate-shimmer {
-    animation: shimmer 2s infinite;
-  }
-  
-  .gpu-accelerated {
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  
-  .smooth-transition {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Parallax Performance Optimizations */
-  .parallax-video {
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
-  
-  .parallax-content {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-  
-  /* Large Typography Fixes */
-  .hero-title-xl {
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-  }
-  
-  .hero-title-container {
-    overflow: visible;
-    min-height: fit-content;
-  }
-  
-  @media (min-width: 1280px) {
-    .hero-title-xl {
-      line-height: 0.85;
-    }
-  }
-  
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-float,
-    .animate-glow,
-    .animate-typing,
-    .animate-cube,
-    .particle {
-      animation: none;
-    }
-    
-    .hover-lift {
-      transition: none;
-    }
-  }
-  
-  /* Loading states */
-  .skeleton {
-    background: linear-gradient(110deg, hsl(var(--muted)) 8%, hsl(var(--muted-foreground) / 0.1) 18%, hsl(var(--muted)) 33%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s ease-in-out infinite;
-  }
-  
-  .loading-dots {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-  }
-  
-  .loading-dots div {
-    position: absolute;
-    top: 33px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: hsl(var(--primary));
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  
-  .loading-dots div:nth-child(1) {
-    left: 8px;
-    animation: loadingDots1 0.6s infinite;
-  }
-  
-  .loading-dots div:nth-child(2) {
-    left: 8px;
-    animation: loadingDots2 0.6s infinite;
-  }
-  
-  .loading-dots div:nth-child(3) {
-    left: 32px;
-    animation: loadingDots2 0.6s infinite;
-  }
-  
-  .loading-dots div:nth-child(4) {
-    left: 56px;
-    animation: loadingDots3 0.6s infinite;
-  }
-  
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
     will-change: transform;
-    isolation: isolate;
   }
   
   .flip-card:hover .flip-card-inner {
@@ -1734,7 +1666,7 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: translateZ(0);
-    overflow: hidden;
+    overflow: visible; /* Ensure content is not clipped */
   }
   
   .flip-card-front {
@@ -1745,6 +1677,7 @@
   .flip-card-back {
     z-index: 1;
     transform: rotateY(180deg) translateZ(0);
+    visibility: visible; /* Ensure back face is visible */
   }
 
   .floating-particle {
