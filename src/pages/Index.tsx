@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/HeroSection";
 import { ServicesSection } from "@/components/ServicesSection";
@@ -11,8 +12,28 @@ import { SimpleInteractiveBackground } from "@/components/ui/interactive-backgro
 import { SEOHead } from "@/components/seo/SEOHead";
 
 const Index = () => {
+  const location = useLocation();
+  // Helper to get query params
+  const getQueryParam = (param: string) => {
+    const params = new URLSearchParams(location.search);
+    return params.get(param);
+  };
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    // If coming from gallery (query param), skip loading screen
+    if (getQueryParam('fromGallery')) {
+      setIsLoading(false);
+      setShowContent(true);
+      return;
+    }
+    // Ensure minimum loading time for better UX
+    const minLoadTime = setTimeout(() => {
+      if (!isLoading) return;
+    }, 3000);
+    return () => clearTimeout(minLoadTime);
+  }, [isLoading, location.search]);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -21,15 +42,6 @@ const Index = () => {
       setShowContent(true);
     }, 100);
   };
-
-  useEffect(() => {
-    // Ensure minimum loading time for better UX
-    const minLoadTime = setTimeout(() => {
-      if (!isLoading) return;
-    }, 3000);
-
-    return () => clearTimeout(minLoadTime);
-  }, [isLoading]);
 
   if (isLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />;
