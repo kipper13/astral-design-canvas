@@ -21,7 +21,7 @@ export const AnimatedSection = ({
   threshold = 0.1,
   id
 }: AnimatedSectionProps) => {
-  const { ref } = useScrollAnimation({
+  const { ref } = useScrollAnimation<HTMLElement>({
     animationType,
     delay,
     duration,
@@ -52,7 +52,7 @@ export const StaggeredContainer = ({
   className?: string;
   staggerDelay?: number;
 }) => {
-  const { ref } = useScrollAnimation({
+  const { ref } = useScrollAnimation<HTMLDivElement>({
     animationType: 'custom',
     customAnimation: (element) => {
       const childElements = element.children;
@@ -95,7 +95,7 @@ export const AnimatedText = ({
   duration?: number;
   stagger?: number;
 }) => {
-  const { ref } = useScrollAnimation({
+  const { ref } = useScrollAnimation<HTMLSpanElement>({
     animationType: 'custom',
     customAnimation: (element) => {
       // Split text into characters
@@ -141,7 +141,7 @@ export const AnimatedCounter = ({
   className?: string;
   suffix?: string;
 }) => {
-  const { ref } = useScrollAnimation({
+  const { ref } = useScrollAnimation<HTMLSpanElement>({
     animationType: 'custom',
     customAnimation: (element) => {
       let currentNumber = from;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 // Advanced scroll-triggered animations hook
-export const useScrollAnimation = (options: {
+export const useScrollAnimation = <T extends HTMLElement = HTMLElement>(options: {
   threshold?: number;
   rootMargin?: string;
   triggerOnce?: boolean;
@@ -10,7 +10,7 @@ export const useScrollAnimation = (options: {
   duration?: number;
   delay?: number;
   ease?: string;
-  customAnimation?: (element: HTMLElement) => void;
+  customAnimation?: (element: T) => void;
 }) => {
   const {
     threshold = 0.1,
@@ -23,7 +23,7 @@ export const useScrollAnimation = (options: {
     customAnimation
   } = options;
 
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export const useScrollAnimation = (options: {
     return () => observer.disconnect();
   }, [threshold, rootMargin, triggerOnce]);
 
-  const animateElement = (element: HTMLElement) => {
+  const animateElement = (element: T) => {
     if (customAnimation) {
       customAnimation(element);
       return;
@@ -97,7 +97,7 @@ export const useScrollAnimation = (options: {
     }
   };
 
-  const resetElement = (element: HTMLElement) => {
+  const resetElement = (element: T) => {
     gsap.set(element, { opacity: 0, y: 50, x: 0, scale: 1, rotation: 0 });
   };
 
@@ -126,8 +126,8 @@ export const useParallax = (speed: number = 0.5) => {
 };
 
 // Magnetic hover effect hook
-export const useMagneticHover = (strength: number = 0.3) => {
-  const ref = useRef<HTMLElement>(null);
+export const useMagneticHover = <T extends HTMLElement = HTMLElement>(strength: number = 0.3) => {
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const element = ref.current;

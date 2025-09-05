@@ -97,7 +97,6 @@ const services = [
 ];
 
 export const ServicesSection = () => {
-  const [activeService, setActiveService] = useState<number | null>(null);
   
   useEffect(() => {
     // Create floating particles animation
@@ -202,8 +201,6 @@ export const ServicesSection = () => {
               key={service.title} 
               service={service} 
               index={index}
-              isActive={activeService === index}
-              setActive={setActiveService}
             />
           ))}
         </StaggeredContainer>
@@ -258,13 +255,11 @@ const TabButton = ({ label, active = false }: { label: string; active?: boolean 
 );
 
 // Enhanced Service Card Component with all features
-const ServiceCard = ({ service, index, isActive, setActive }: { 
+const ServiceCard = ({ service, index }: { 
   service: any; 
   index: number; 
-  isActive: boolean;
-  setActive: (index: number | null) => void;
 }) => {
-  const magneticRef = useMagneticHover(0.2) as React.RefObject<HTMLDivElement>;
+  const magneticRef = useMagneticHover<HTMLDivElement>(0.2);
   const iconRef = React.useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -293,8 +288,6 @@ const ServiceCard = ({ service, index, isActive, setActive }: {
       className="service-card flip-card h-96"
       data-cursor="hover"
       data-cursor-text="View Details"
-      onMouseEnter={() => setActive(index)}
-      onMouseLeave={() => setActive(null)}
     >
       <div className="flip-card-inner">
         {/* Enhanced Front Side */}
@@ -388,35 +381,6 @@ const ServiceCard = ({ service, index, isActive, setActive }: {
           </div>
         </div>
       </div>
-
-      {/* Client Testimonial Overlay */}
-      {isActive && (
-        <div className="absolute -bottom-20 left-0 right-0 bg-card border border-border rounded-xl p-4 shadow-lg z-20 transform transition-all duration-300">
-          <div className="flex items-start space-x-3">
-            <div className="flex-shrink-0">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">
-                  {service.testimonial.author.charAt(0)}
-                </span>
-              </div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center mb-1">
-                {[...Array(service.testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-2">
-                "{service.testimonial.text}"
-              </p>
-              <div className="text-xs">
-                <span className="font-semibold text-foreground">{service.testimonial.author}</span>
-                <span className="text-muted-foreground"> - {service.testimonial.company}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
