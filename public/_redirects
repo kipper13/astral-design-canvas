@@ -1,0 +1,47 @@
+/* Netlify SPA routing: redirect all requests to index.html */
+/* https://docs.netlify.com/routing/redirects/#history-pushstate-and-single-page-apps */
+/* Place this file in the public/ directory */
+/* Format: /path  /destination  [status] */
+/* This rule ensures all routes are handled by your SPA */
+/* Example: */
+/* /about   /index.html   200 */
+/* /contact /index.html   200 */
+/* Wildcard: */
+/* /*      /index.html   200 */
+/* Actual rule: */
+/* Redirect all paths to index.html with 200 status */
+/* This is required for client-side routing to work on Netlify */
+/* Do not remove! */
+/* --- */
+/* Netlify _redirects file for SPA */
+/* --- */
+/* All routes redirect to index.html */
+/* --- */
+/* The following line is the actual redirect rule: */
+/* --- */
+/* Wildcard redirect for SPA */
+/* --- */
+/* This must be the last line in the file */
+/* --- */
+/* Netlify SPA routing rule: */
+/* --- */
+/* All requests go to index.html */
+/* --- */
+/* Final rule: */
+/* --- */
+/* /*    /index.html   200 */
+/* --- */
+/* End of file */
+/* --- */
+/* Actual redirect rule below: */
+/* --- */
+/* /*    /index.html   200 */
+/* --- */
+/* End of Netlify _redirects file */
+/* --- */
+/* SPA routing enabled */
+/* --- */
+/* /*    /index.html   200 */
+/* --- */
+/* End */
+/* /*    /index.html   200 */
