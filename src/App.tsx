@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { EnhancedCursor } from "@/components/ui/enhanced-cursor";
 import Index from "./pages/Index";
-import Resume from "./pages/Resume";
+import ResumePage from "./pages/Resume";
 import LandingPagesGallery from "./pages/LandingPagesGallery";
 import NotFound from "./pages/NotFound";
 
@@ -25,7 +24,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/resume" element={<Resume />} />
+            <Route path="/resume" element={<ResumePage />} />
             <Route path="/gallery/landing-pages" element={<LandingPagesGallery />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
