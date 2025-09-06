@@ -228,11 +228,18 @@ export const PortfolioSection = () => {
               {/* Project Image with Before/After Slider */}
               <div className="relative h-64 overflow-hidden">
                 <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110 aspect-[4/3]"
                   style={{ 
                     backgroundImage: `url(${hoveredProject === project.id ? project.beforeImage : project.image})` 
                   }}
-                />
+                >
+                  <img 
+                    src={hoveredProject === project.id ? project.beforeImage : project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover opacity-0"
+                    onError={e => e.currentTarget.style.display = 'none'}
+                  />
+                </div>
                 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

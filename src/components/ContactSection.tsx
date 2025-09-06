@@ -116,6 +116,17 @@ export const ContactSection = () => {
       
       <div className="container mx-auto px-4">
 
+        {/* Header Section */}
+        <div className="text-center mb-8 flex flex-col items-center">
+          <h2 className="font-poppins font-extrabold text-4xl md:text-5xl mb-2 flex flex-wrap justify-center items-center gap-2">
+            <span className="text-foreground">Let's Create Something</span>
+            <span className="animated-gradient-text drop-shadow-xl" style={{display: 'inline', width: 'auto', height: 'auto'}}>Amazing</span>
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground font-montserrat mt-2 max-w-xl">
+            Ready to bring your vision to life? Let's discuss your project and explore how we can work together.
+          </p>
+        </div>
+
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div className="bg-card border border-border rounded-3xl p-8 hover-lift hover-glow relative overflow-hidden">
