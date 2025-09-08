@@ -1,258 +1,160 @@
-import { useEffect, useRef, useState } from "react";
-import { Code, Palette, TrendingUp, Zap } from "lucide-react";
+import { Code, Palette, TrendingUp, Zap, Wand2, Brush, Bot } from "lucide-react";
 
 const skills = [
   {
     name: "UI/UX Design",
-    percentage: 95,
+    level: "Advanced",
     icon: Palette,
     color: "from-cyan-400 to-blue-600",
-    description: "Creating intuitive and beautiful user interfaces"
+    description: "Designing intuitive and engaging user interfaces for web and mobile applications. Specialized in responsive, user-centered dashboards and mobile-first designs."
   },
   {
     name: "Funnel Design",
-    percentage: 90,
+    level: "Advanced",
     icon: TrendingUp,
     color: "from-emerald-400 to-teal-600",
-    description: "Optimizing conversion funnels for maximum ROI"
+    description: "Building conversion-focused funnels that maximize ROI. Proven record of increasing conversion rates by optimizing landing pages and sales flows."
   },
   {
     name: "HTML/CSS",
-    percentage: 85,
+    level: "Proficient",
     icon: Code,
     color: "from-orange-400 to-red-600",
-    description: "Clean, semantic code and modern CSS techniques"
+    description: "Developing clean, semantic, and scalable code with modern CSS techniques for responsive design."
   },
   {
     name: "JavaScript",
-    percentage: 75,
+    level: "Proficient",
     icon: Zap,
     color: "from-violet-400 to-purple-600",
-    description: "Interactive experiences and modern frameworks"
+    description: "Creating interactive experiences and dynamic functionality using modern frameworks."
+  },
+  {
+    name: "Motion Design",
+    level: "Proficient",
+    icon: Wand2,
+    color: "from-pink-400 to-pink-600",
+    description: "Creating engaging animations and motion graphics for web and mobile applications."
+  },
+  {
+    name: "Branding",
+    level: "Advanced",
+    icon: Brush,
+    color: "from-yellow-400 to-orange-600",
+    description: "Developing cohesive brand identities that resonate with target audiences."
+  },
+  {
+    name: "Automation Tools",
+    level: "Proficient",
+    icon: Bot,
+    color: "from-green-400 to-green-600",
+    description: "Implementing automation solutions to streamline workflows and improve efficiency."
+  },
+  {
+    name: "Visual Design",
+    level: "Advanced",
+    icon: Palette,
+    color: "from-indigo-400 to-purple-600",
+    description: "Crafting visually compelling layouts, color schemes, and graphics to enhance brand identity and user engagement."
   }
 ];
 
-interface ProgressRingProps {
-  percentage: number;
-  color: string;
-  size?: number;
-  strokeWidth?: number;
-}
+const tools = [
+  { name: "Figma", icon: "fab fa-figma", color: "text-purple-500" },
+  { name: "Adobe XD", icon: "fas fa-vector-square", color: "text-pink-500" },
+  { name: "Sketch", icon: "fas fa-pencil-ruler", color: "text-orange-500" },
+  { name: "Webflow", icon: "fas fa-cube", color: "text-blue-500" },
+  { name: "React", icon: "fab fa-react", color: "text-cyan-400" },
+  { name: "Framer", icon: "fas fa-magic", color: "text-indigo-500" },
+  { name: "Analytics", icon: "fas fa-chart-line", color: "text-green-500" },
+  { name: "Motion Design", icon: "fas fa-wave-square", color: "text-pink-400" },
+  { name: "GoHighLevel", icon: "fas fa-robot", color: "text-green-400" }
+];
 
-const ProgressRing: React.FC<ProgressRingProps> = ({ 
-  percentage, 
-  color, 
-  size = 120, 
-  strokeWidth = 8 
-}) => {
-  const [animatedPercentage, setAnimatedPercentage] = useState(0);
-  const ringRef = useRef<SVGCircleElement>(null);
-  
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
-  const strokeDasharray = circumference;
-  const strokeDashoffset = circumference - (animatedPercentage / 100) * circumference;
-
-  // Extract colors from the gradient string
-  const getGradientColors = (colorString: string) => {
-    const colorMap: { [key: string]: string } = {
-      'cyan-400': '#22d3ee',
-      'blue-600': '#2563eb',
-      'emerald-400': '#34d399',
-      'teal-600': '#0d9488',
-      'orange-400': '#fb923c',
-      'red-600': '#dc2626',
-      'violet-400': '#a78bfa',
-      'purple-600': '#9333ea'
-    };
-    
-    const matches = colorString.match(/from-(\S+)\s+to-(\S+)/);
-    if (matches) {
-      const fromColor = colorMap[matches[1]] || '#3b82f6';
-      const toColor = colorMap[matches[2]] || '#8b5cf6';
-      return { from: fromColor, to: toColor };
-    }
-    return { from: '#3b82f6', to: '#8b5cf6' };
-  };
-
-  const gradientColors = getGradientColors(color);
-  const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Animate the progress
-            let start = 0;
-            const increment = percentage / 100;
-            const timer = setInterval(() => {
-              start += increment;
-              if (start >= percentage) {
-                start = percentage;
-                clearInterval(timer);
-              }
-              setAnimatedPercentage(start);
-            }, 20);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (ringRef.current) {
-      observer.observe(ringRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [percentage]);
-
-  return (
-    <div className="relative">
-      <svg
-        width={size}
-        height={size}
-        className="transform -rotate-90"
-      >
-        {/* Background Circle */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="hsl(var(--border))"
-          strokeWidth={strokeWidth}
-          fill="none"
-        />
-        
-        {/* Progress Circle */}
-        <circle
-          ref={ringRef}
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke={`url(#${gradientId})`}
-          strokeWidth={strokeWidth}
-          fill="none"
-          strokeDasharray={strokeDasharray}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
-          style={{
-            filter: `drop-shadow(0 0 8px ${gradientColors.from}30)`
-          }}
-        />
-        
-        {/* Dynamic Gradient Definition */}
-        <defs>
-          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={gradientColors.from} />
-            <stop offset="100%" stopColor={gradientColors.to} />
-          </linearGradient>
-        </defs>
-      </svg>
-      
-      {/* Percentage Text */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-poppins font-bold text-foreground">
-          {Math.round(animatedPercentage)}%
-        </span>
-      </div>
-    </div>
-  );
-};
+const strengths = [
+  "Responsive Design",
+  "Conversion Optimization",
+  "Interactive Prototyping",
+  "Data-Driven Design"
+];
 
 export const SkillsSection = () => {
   return (
-    <section id="skills" className="py-20 lg:py-32 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl"></div>
-      
+    <section id="skills" className="py-20 lg:py-32 bg-background relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-poppins font-bold text-foreground mb-6">
-            Skills & <span className="gradient-text">Expertise</span>
+        {/* Section Title */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-4">
+            <span className="text-foreground">Skills&nbsp;</span>
+            <span className="text-foreground font-bold" style={{color: 'transparent', backgroundImage: 'linear-gradient(90deg, #6D28D9 0%, #A78BFA 60%, #9333EA 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text'}}>
+              Expertise
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground font-montserrat max-w-3xl mx-auto">
-            A comprehensive skill set that enables me to deliver exceptional design solutions 
-            from concept to completion.
+          <p className="text-lg text-muted-foreground font-montserrat max-w-2xl mx-auto">
+            A well-rounded skill set that combines design creativity with technical expertise.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {skills.map((skill, index) => (
+        {/* Skill Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {skills.map((skill, idx) => (
             <div
               key={skill.name}
-              className="text-center group"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              className="bg-card border border-border rounded-2xl p-6 flex flex-col items-center text-center shadow-lg hover:scale-105 transition-transform duration-300 group"
+              style={{
+                animation: `fadeInUp 0.6s cubic-bezier(.23,1.01,.32,1) ${idx * 0.1}s both`
+              }}
             >
-              {/* Skill Icon */}
-              <div className="mb-6 flex justify-center">
-                <div className={`w-16 h-16 bg-gradient-to-br ${skill.color} rounded-2xl flex items-center justify-center shadow-lg hover-lift group-hover:shadow-2xl transition-all duration-300`}>
-                  <skill.icon className="h-8 w-8 text-white" />
-                </div>
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{boxShadow: `0 0 32px 8px rgba(56,189,248,0.25)`}}></div>
+              <div className="mb-4 text-4xl relative z-10">
+                <skill.icon className="text-white" />
               </div>
-
-              {/* Progress Ring */}
-              <div className="mb-6 flex justify-center">
-                <div className="relative hover-lift">
-                  <ProgressRing 
-                    percentage={skill.percentage} 
-                    color={skill.color}
-                  />
-                  
-                  {/* Glow Effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10`}></div>
-                </div>
+              <div className="mb-2 flex justify-center relative z-10">
+                <span className={`px-3 py-1 rounded-full text-xs font-bold ${skill.level === 'Advanced' ? 'bg-blue-600 text-white' : 'bg-green-600 text-white'}`}>{skill.level}</span>
               </div>
-
-              {/* Skill Details */}
-              <div className="space-y-2">
-                <h3 className="text-xl font-poppins font-bold text-foreground">
-                  {skill.name}
-                </h3>
-                <p className="text-sm text-muted-foreground font-montserrat leading-relaxed">
-                  {skill.description}
-                </p>
-              </div>
-
-              {/* Skill Level Indicator */}
-              <div className="mt-4">
-                <div className="w-full bg-border rounded-full h-2">
-                  <div 
+              <div className="font-poppins font-bold text-xl mb-1 text-foreground relative z-10">{skill.name}</div>
+              <div className="text-muted-foreground font-montserrat mb-3 relative z-10">{skill.description}</div>
+              {/* Animated progress bar */}
+              <div className="w-full mt-2 relative z-10">
+                <div className="h-2 bg-border rounded-full overflow-hidden">
+                  <div
                     className={`h-2 bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out`}
-                    style={{ width: `${skill.percentage}%` }}
+                    style={{ width: skill.level === 'Advanced' ? '90%' : '70%' }}
                   ></div>
                 </div>
               </div>
             </div>
           ))}
         </div>
+        <style>{`
+          @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
 
-        {/* Additional Skills Grid */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-6">
-          {[
-            { name: "Figma", icon: "fab fa-figma", color: "text-purple-500" },
-            { name: "Adobe XD", icon: "fas fa-vector-square", color: "text-pink-500" },
-            { name: "Sketch", icon: "fas fa-pencil-ruler", color: "text-orange-500" },
-            { name: "Webflow", icon: "fas fa-cube", color: "text-blue-500" },
-            { name: "React", icon: "fab fa-react", color: "text-cyan-400" },
-            { name: "Framer", icon: "fas fa-magic", color: "text-indigo-500" },
-            { name: "Analytics", icon: "fas fa-chart-line", color: "text-green-500" }
-          ].map((tool, index) => (
-            <div
-              key={tool.name}
-              className="bg-card border border-border rounded-xl p-4 text-center hover-lift hover-glow group transition-all duration-300"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="relative mb-3">
-                <i className={`${tool.icon} text-3xl ${tool.color} mb-2 group-hover:scale-110 transition-transform duration-300`}></i>
-                <div className={`absolute inset-0 ${tool.color.replace('text-', 'bg-').replace('500', '500/20')} rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300`}></div>
+        {/* Tools & Platforms */}
+        <div className="mb-8">
+          <h3 className="text-lg font-poppins font-bold text-foreground mb-4 text-center">Tools & Platforms</h3>
+          <div className="flex flex-wrap justify-center gap-6">
+            {tools.map(tool => (
+              <div key={tool.name} className="flex flex-col items-center justify-center mx-3 my-2" aria-label={tool.name}>
+                <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-card grayscale hover:grayscale-0 hover:shadow-[0_0_16px_4px_rgba(56,189,248,0.4)] transition-all duration-300 text-3xl">
+                  <i className={tool.icon}></i>
+                </div>
+                <span className="mt-2 text-xs text-foreground font-montserrat font-medium text-center px-2">{tool.name}</span>
               </div>
-              <p className="text-sm font-montserrat font-medium text-foreground group-hover:text-primary transition-colors">
-                {tool.name}
-              </p>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Core Strengths */}
+        <div className="flex flex-wrap justify-center gap-3 mt-6">
+          {strengths.map(strength => (
+            <span key={strength} className="px-4 py-2 bg-primary/10 text-primary text-sm font-montserrat rounded-full border border-primary/20">
+              {strength}
+            </span>
           ))}
         </div>
       </div>
